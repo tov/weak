@@ -1,10 +1,10 @@
-#include "util/weak_unordered_set.h"
+#include "weak_unordered_set.h"
 #include <catch.hpp>
 #include <memory>
 #include <vector>
 
 using namespace std;
-using namespace intersections::util;
+using namespace weak;
 
 TEST_CASE("Default construction and insertion")
 {

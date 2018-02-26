@@ -1,8 +1,8 @@
-#include "util/raw_vector.h"
+#include "raw_vector.h"
 #include <catch.hpp>
 #include <string>
 
-using namespace intersections::util;
+using namespace weak::detail;
 using namespace std;
 
 TEST_CASE("default construction")

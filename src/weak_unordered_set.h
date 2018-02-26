@@ -9,7 +9,7 @@
 #include <limits>
 #include <memory>
 
-namespace intersections::util {
+namespace weak {
 
 static size_t const default_bucket_count = 8;
 static double const grow_at_ratio = 0.75;
@@ -315,7 +315,7 @@ private:
         typename std::allocator_traits<allocator_type>
                      ::template rebind_alloc<weak_value_type>;
 
-    using vector_t = raw_vector<Bucket, bucket_allocator_type>;
+    using vector_t = detail::raw_vector<Bucket, bucket_allocator_type>;
 
 public:
 
@@ -1045,4 +1045,4 @@ void swap(weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
 }
 
 
-} // end namespace intersections::util
+} // end namespace weak

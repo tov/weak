@@ -4,8 +4,10 @@
 #include <iterator>
 #include <memory>
 
-namespace intersections::util {
+namespace weak::detail {
 
+/// A `raw_vector` is a fixed-sized, non-copyable vector that owns but does
+/// not initialize its memory.
 template<class T, class Allocator = std::allocator<T>>
 class raw_vector
 {
@@ -22,28 +24,26 @@ public:
     {}
 
     explicit raw_vector(size_t size,
-                          const allocator_type& allocator = allocator_type())
-            : allocator_(allocator), size_(size),
-              data_(allocate_(allocator_, size_)) {}
+                        const allocator_type& allocator = allocator_type())
+            : allocator_(allocator),
+              size_(size),
+              data_(allocate_(allocator_, size_))
+    {}
+
+    raw_vector(const raw_vector&) = delete;
+
+    raw_vector(raw_vector&& other) noexcept : raw_vector()
+    {
+        swap(other);
+    }
+
+    raw_vector& operator=(raw_vector&& other) = delete;
+    raw_vector& operator=(const raw_vector&) = delete;
 
     ~raw_vector()
     {
         deallocate_();
     }
-
-    raw_vector(raw_vector&& other) : raw_vector()
-    {
-        swap(other);
-    }
-
-    raw_vector& operator=(raw_vector&& other)
-    {
-        swap(other);
-        other.clear();
-    }
-
-    raw_vector(const raw_vector&) = delete;
-    raw_vector& operator=(const raw_vector&) = delete;
 
     bool empty() const
     {
@@ -61,14 +61,6 @@ public:
         swap(allocator_, other.allocator_);
         swap(size_, other.size_);
         swap(data_, other.data_);
-    }
-
-    void clear()
-    {
-        if (size_ != 0) {
-            deallocate_();
-            data_ = allocate_(allocator_, 0);
-        }
     }
 
     const_reference operator[](size_t index) const
@@ -139,5 +131,11 @@ private:
         allocator_trait::deallocate(allocator_, data_, size_);
     }
 };
+
+template<class T, class Allocator>
+void swap(raw_vector<T, Allocator>& a, raw_vector<T, Allocator>& b)
+{
+    a.swap(b);
+}
 
 } // end namespace intersections::util
