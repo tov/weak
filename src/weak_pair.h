@@ -23,7 +23,13 @@ struct weak_pair
     value_weak_pointer second;
 
     weak_pair(const strong_type& strong)
-            : first(strong.first), second(strong.second) {}
+            : first(strong.first), second(strong.second)
+    { }
+
+    template <class K, class V>
+    weak_pair(K&& key, V&& value)
+            : first(std::forward<K>(key)), second(std::forward<V>(value))
+    { }
 
     bool expired() const
     {
