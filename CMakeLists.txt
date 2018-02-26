@@ -12,11 +12,10 @@ endmacro (add_executable17)
 
 add_executable17(weak_hash_table_test
         test/catch_main.cpp
-        test/wus_test.cpp
-        src/weak_unordered_set.h
-        src/raw_vector.h)
+        test/weak_unordered_set_test.cpp
+        src/weak_unordered_set.h)
 
 add_executable17(raw_vector_test
         test/catch_main.cpp
         test/raw_vector_test.cpp
-        src/raw_vector.h)
+        src/detail/raw_vector.h)

@@ -1,4 +1,4 @@
-#include "raw_vector.h"
+#include "detail/raw_vector.h"
 #include <catch.hpp>
 #include <string>
 
