@@ -10,10 +10,19 @@ macro (add_executable17 name)
     set_property(TARGET ${name} PROPERTY CXX_STANDARD_REQUIRED On)
 endmacro (add_executable17)
 
+add_executable17(pairs_test
+        test/catch_main.cpp
+        test/pairs_test.cpp
+        src/weak_traits.h
+        src/weak_key_pair.h
+        src/weak_value_pair.h
+        src/weak_pair.h)
+
 add_executable17(weak_hash_table_test
         test/catch_main.cpp
         test/weak_unordered_set_test.cpp
-        src/weak_unordered_set.h)
+        src/weak_unordered_set.h
+        src/detail/rh_weak_hash_table.h)
 
 add_executable17(raw_vector_test
         test/catch_main.cpp

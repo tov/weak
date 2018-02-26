@@ -23,6 +23,11 @@ struct weak_key_pair
             : first(strong.first), second(strong.second)
     { }
 
+    template <class K, class V>
+    weak_key_pair(K&& key, V&& value)
+            : first(std::forward<K>(key)), second(std::forward<V>(value))
+    { }
+
     bool expired() const
     {
         return first.expired();
