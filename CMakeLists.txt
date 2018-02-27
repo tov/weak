@@ -16,7 +16,7 @@ add_executable17(pairs_test
         src/weak_traits.h
         src/weak_key_pair.h
         src/weak_value_pair.h
-        src/weak_pair.h)
+        src/weak_weak_pair.h)
 
 add_executable17(raw_vector_test
         test/catch_main.cpp

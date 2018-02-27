@@ -7,7 +7,7 @@ namespace weak {
 template<class Key, class Value,
         class KeyWeakPtr = std::weak_ptr<const Key>,
         class ValueWeakPtr = std::weak_ptr<Value>>
-struct weak_pair
+struct weak_weak_pair
 {
     using key_type = Key;
     using value_type = Value;
@@ -22,12 +22,12 @@ struct weak_pair
     key_weak_pointer first;
     value_weak_pointer second;
 
-    weak_pair(const strong_type& strong)
+    weak_weak_pair(const strong_type& strong)
             : first(strong.first), second(strong.second)
     { }
 
     template <class K, class V>
-    weak_pair(K&& key, V&& value)
+    weak_weak_pair(K&& key, V&& value)
             : first(std::forward<K>(key)), second(std::forward<V>(value))
     { }
 

@@ -1,4 +1,4 @@
-#include "weak_pair.h"
+#include "weak_weak_pair.h"
 #include "weak_key_pair.h"
 #include "weak_value_pair.h"
 
@@ -48,7 +48,7 @@ TEST_CASE("weak_pair")
 {
     auto hello = make_shared<string>("hello");
     auto world = make_shared<string>("world");
-    weak_pair<string, string> pair{hello, world};
+    weak_weak_pair<string, string> pair{hello, world};
     CHECK( !pair.expired() );
 
     hello = nullptr;
