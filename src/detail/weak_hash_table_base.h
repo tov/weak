@@ -419,24 +419,24 @@ public:
         return {buckets_.end(), buckets_.end()};
     }
 
-    iterator begin() const
+    const_iterator begin() const
     {
-        return {buckets_.begin(), buckets_.end()};
+        return cbegin();
     }
 
-    iterator end() const
+    const_iterator end() const
     {
-        return {buckets_.end(), buckets_.end()};
+        return cend();
     }
 
     const_iterator cbegin() const
     {
-        return begin();
+        return {buckets_.begin(), buckets_.end()};
     }
 
     const_iterator cend() const
     {
-        return end();
+        return {buckets_.end(), buckets_.end()};
     }
 
 private:
