@@ -604,8 +604,8 @@ protected:
         bucket.used_ = 1;
     }
 
-    /// Expects to call exactly one of the paramters `on_uninit`, `on_init`, and
-    /// `on_found`, which will (re-)initialize the bucket with the given key.
+    /// Expects to call exactly one of the parameters `on_uninit`, `on_init`,
+    /// and `on_found`, which will (re-)initialize the bucket with the given key.
     template <class OnUninit, class OnInit, class OnFound>
     void insert_helper_(const key_type& key,
                         OnUninit on_uninit, OnInit on_init, OnFound on_found)
@@ -615,8 +615,8 @@ protected:
 
 private:
 
-    /// Expects to call exactly one of the paramters `on_uninit`, `on_init`, and
-    /// `on_found`, which will (re-)initialize the bucket with the given key.
+    /// Expects to call exactly one of the parameters `on_uninit`, `on_init`,
+    /// and `on_found`, which will (re-)initialize the bucket with the given key.
     ///
     /// PRECONDITION: hash_code == hash_(key)
     template <class OnUninit, class OnInit, class OnFound>
