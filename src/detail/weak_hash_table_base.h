@@ -171,13 +171,6 @@ public:
             : weak_hash_table_base(other, other.get_allocator())
     { }
 
-private:
-    size_t min_bucket_count_() const noexcept
-    {
-        return size_t(size() / max_load_factor()) + 1;
-    }
-
-public:
     /// Copy constructor with allocator.
     weak_hash_table_base(const weak_hash_table_base& other,
                          const allocator_type& allocator)
@@ -322,21 +315,25 @@ public:
         }
     }
 
+    void reserve(size_t extra)
+    {
+        remove_expired();
+        resize_(std::max(size() + extra, min_bucket_count_()));
+    }
+
     /// Inserts an element.
     void insert(const strong_value_type& value)
     {
-        if (bucket_count() < 1) resize_(default_bucket_count);
-        insert_(hash_(*weak_trait::key(value)), value);
         maybe_grow_();
+        insert_(hash_(*weak_trait::key(value)), value);
     }
 
     /// Inserts an element.
     void insert(strong_value_type&& value)
     {
-        if (bucket_count() < 1) resize_(default_bucket_count);
+        maybe_grow_();
         size_t hash_code = hash_(*weak_trait::key(value));
         insert_(hash_code, std::move(value));
-        maybe_grow_();
     }
 
     /// Inserts a range of elements.
@@ -449,11 +446,23 @@ private:
     vector_t buckets_;
     size_t size_;
 
+    bool needs_to_grow_()
+    {
+        return load_factor() > max_load_factor() || size() >= bucket_count();
+    }
+
     void maybe_grow_()
     {
-        if (load_factor() > max_load_factor()) {
-            resize_(2 * bucket_count());
+        if (needs_to_grow_()) {
+            remove_expired();
+            if (needs_to_grow_())
+                resize_(std::max(2 * bucket_count(), size() + 1));
         }
+    }
+
+    size_t min_bucket_count_() const noexcept
+    {
+        return size_t(size() / max_load_factor()) + 1;
     }
 
     void resize_(size_t new_bucket_count)
