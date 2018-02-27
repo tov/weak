@@ -403,9 +403,9 @@ public:
     const_iterator find(const KeyLike& key) const
     {
         if (auto bucket = lookup_(key)) {
-            return {bucket, buckets_.end()};
+            return {bucket, buckets_.cend()};
         } else {
-            return end();
+            return cend();
         }
     }
 
