@@ -343,6 +343,14 @@ public:
         maybe_grow_();
     }
 
+    /// Inserts a range of elements.
+    template <typename InputIter>
+    void insert(InputIter start, InputIter limit)
+    {
+        for ( ; start != limit; ++start)
+            insert(*start);
+    }
+
     /// Erases the element if the given key, returning whether an
     /// element was actually erased.
     bool erase(const key_type& key)
