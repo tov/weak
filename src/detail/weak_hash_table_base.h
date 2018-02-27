@@ -554,9 +554,7 @@ private:
                 auto bucket_locked = bucket.value_.lock();
                 bucket.value_ = std::exchange(value, weak_trait::move(bucket_locked));
                 // swap doesn't work because bitfield:
-                size_t tmp = bucket.hash_code_;
-                bucket.hash_code_ = hash_code;
-                hash_code = tmp;
+                bucket.hash_code_ = std::exchange(hash_code, size_t(bucket.hash_code_));
                 dist = existing_distance;
             }
 
