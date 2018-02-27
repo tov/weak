@@ -53,4 +53,7 @@ TEST_CASE("weak_unordered_map")
 
     five = nullptr;
     CHECK( map.find("hello") == map.end() );
+
+    five = map[hello] = make_shared<int>(5);
+    CHECK( map.find("hello") != map.end() );
 }

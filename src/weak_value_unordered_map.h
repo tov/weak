@@ -24,22 +24,23 @@ public:
     class proxy
     {
     public:
-        proxy(const proxy&) = default;
+        proxy(const proxy&) noexcept = default;
+        proxy(proxy&&) noexcept = default;
+
         proxy& operator=(const proxy&) = delete;
-        proxy(proxy&&) = default;
         proxy& operator=(proxy&&) = delete;
 
-        Value& operator*() const
+        Value& operator*() const noexcept
         {
-            return *operator->();
+            return *value_ptr_;
         }
 
-        std::shared_ptr<Value> operator->() const
+        std::shared_ptr<Value> operator->() const noexcept
         {
             return value_ptr_;
         }
 
-        operator std::shared_ptr<Value>() const
+        operator std::shared_ptr<Value>() const noexcept
         {
             return value_ptr_;
         }
