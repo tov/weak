@@ -33,7 +33,7 @@ public:
     using allocator_type        = Allocator;
 
     static constexpr size_t default_bucket_count = 8;
-    static constexpr double grow_at_ratio = 0.75;
+    static constexpr float default_max_load_factor = 0.8;
 
 private:
     // We're going to steal a bit from the hash codes to store a used bit..
@@ -192,6 +192,7 @@ private:
             , equal_(equal)
             , bucket_allocator_(bucket_allocator)
             , weak_value_allocator_(weak_value_allocator)
+            , max_load_factor_(default_max_load_factor)
             , buckets_(bucket_count, bucket_allocator_)
             , size_(0)
     {
@@ -295,6 +296,24 @@ public:
         return buckets_.size();
     }
 
+    float load_factor() const
+    {
+        if (bucket_count() == 0) return 1;
+        return float(size_) / bucket_count();
+    }
+
+    float max_load_factor() const
+    {
+        return max_load_factor_;
+    }
+
+    // PRECONDITION: 0 < new_value < 1
+    void max_load_factor(float new_value)
+    {
+        assert(0 < new_value && new_value < 1);
+        max_load_factor_ = new_value;
+    }
+
     /// Note that because pointers may expire without the table finding
     /// out, size() is generally an overapproximation of the number of
     /// elements in the hash table.
@@ -374,6 +393,7 @@ public:
         swap(equal_, other.equal_);
         swap(bucket_allocator_, other.bucket_allocator_);
         swap(weak_value_allocator_, other.weak_value_allocator_);
+        swap(max_load_factor_, other.max_load_factor_);
     }
 
     /// Is the given key mapped by this hash table?
@@ -447,15 +467,15 @@ private:
     key_equal equal_;
     bucket_allocator_type bucket_allocator_;
     weak_value_allocator_type weak_value_allocator_;
+    float max_load_factor_;
 
     vector_t buckets_;
     size_t size_;
 
     void maybe_grow_()
     {
-        auto cap = bucket_count();
-        if (double(size_)/double(cap) > grow_at_ratio) {
-            resize_(2 * cap);
+        if (load_factor() > max_load_factor()) {
+            resize_(2 * bucket_count());
         }
     }
 
