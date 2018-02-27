@@ -827,7 +827,7 @@ template <class T, class Hash, class KeyEqual, class Allocator>
 void swap(weak_hash_table_base<T, Hash, KeyEqual, Allocator>& a,
           weak_hash_table_base<T, Hash, KeyEqual, Allocator>& b)
 {
-
+    a.swap(b);
 }
 
 } // end namespace weak::detail
