@@ -1,4 +1,4 @@
-#include "weak_key_weak_value_unordered_map.h"
+#include "weak_weak_unordered_map.h"
 #include "weak_key_unordered_map.h"
 #include "weak_value_unordered_map.h"
 
@@ -43,7 +43,7 @@ TEST_CASE("weak_value_unordered_map")
 
 TEST_CASE("weak_unordered_map")
 {
-    weak_key_weak_value_unordered_map<string, int> map;
+    weak_weak_unordered_map<string, int> map;
     CHECK( map.find("hello") == map.end() );
 
     auto hello = make_shared<string>("hello");
