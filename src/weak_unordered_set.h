@@ -13,10 +13,10 @@ template <
 >
 class weak_unordered_set :
     public detail::weak_hash_table_base<std::weak_ptr<const Key>,
-                                      Hash, KeyEqual, Allocator>
+                                        Hash, KeyEqual, Allocator>
 {
     using BaseClass = detail::weak_hash_table_base<std::weak_ptr<const Key>,
-                                                 Hash, KeyEqual, Allocator>;
+                                                   Hash, KeyEqual, Allocator>;
 public:
     using BaseClass::weak_hash_table_base;
 };

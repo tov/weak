@@ -55,6 +55,11 @@ protected:
             return value_;
         }
 
+        const weak_value_type& value() const
+        {
+            return value_;
+        }
+
     private:
         weak_value_type value_;
         size_t          used_      : 1,
@@ -353,7 +358,7 @@ public:
     {
         if (Bucket* bucket = lookup_(key)) {
             destroy_bucket_(*bucket);
-            --size;
+            --size_;
             return true;
         } else {
             return false;
