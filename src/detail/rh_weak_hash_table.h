@@ -471,7 +471,7 @@ private:
         }
     }
 
-    template <typename KeyLike>
+    template <class KeyLike>
     const Bucket* lookup_(const KeyLike& key) const
     {
         size_t hash_code = hash_(key);
@@ -498,7 +498,7 @@ private:
         }
     }
 
-    template <typename KeyLike>
+    template <class KeyLike>
     Bucket* lookup_(const KeyLike& key)
     {
         auto const_this = const_cast<const rh_weak_hash_table*>(this);
