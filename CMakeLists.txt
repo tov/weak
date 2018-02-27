@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(intersections CXX)
+project(weak CXX)
 
 include_directories(src)
 include_directories(3rd_party)
