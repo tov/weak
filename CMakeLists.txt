@@ -32,6 +32,6 @@ add_executable17(weak_hash_table_test
         src/weak_key_unordered_map.h
         src/weak_value_unordered_map.h
         src/detail/weak_unordered_map_base.h
-        src/detail/rh_weak_hash_table.h)
+        src/detail/weak_hash_table_base.h)
 
 

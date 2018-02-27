@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detail/rh_weak_hash_table.h"
+#include "detail/weak_hash_table_base.h"
 #include "weak_traits.h"
 #include "weak_value_pair.h"
 

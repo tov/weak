@@ -1,6 +1,6 @@
 #pragma once
 
-#include "detail/rh_weak_hash_table.h"
+#include "detail/weak_hash_table_base.h"
 #include "weak_traits.h"
 
 namespace weak {
@@ -12,13 +12,13 @@ template <
     class Allocator = std::allocator<Key>
 >
 class weak_unordered_set :
-    public detail::rh_weak_hash_table<std::weak_ptr<const Key>,
+    public detail::weak_hash_table_base<std::weak_ptr<const Key>,
                                       Hash, KeyEqual, Allocator>
 {
-    using BaseClass = detail::rh_weak_hash_table<std::weak_ptr<const Key>,
+    using BaseClass = detail::weak_hash_table_base<std::weak_ptr<const Key>,
                                                  Hash, KeyEqual, Allocator>;
 public:
-    using BaseClass::rh_weak_hash_table;
+    using BaseClass::weak_hash_table_base;
 };
 
 template <class Key, class Hash, class KeyEqual, class Allocator>

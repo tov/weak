@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rh_weak_hash_table.h"
+#include "weak_hash_table_base.h"
 
 namespace weak::detail {
 
@@ -11,11 +11,11 @@ template<
         class Allocator
 >
 class weak_unordered_map_base
-        : public rh_weak_hash_table<KeyValue, Hash, KeyEqual, Allocator>
+        : public weak_hash_table_base<KeyValue, Hash, KeyEqual, Allocator>
 {
-    using BaseClass = rh_weak_hash_table<KeyValue, Hash, KeyEqual, Allocator>;
+    using BaseClass = weak_hash_table_base<KeyValue, Hash, KeyEqual, Allocator>;
 public:
-    using BaseClass::rh_weak_hash_table;
+    using BaseClass::weak_hash_table_base;
 };
 
 } // end namespace weak::detail

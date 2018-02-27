@@ -19,7 +19,7 @@ template <
         class KeyEqual = std::equal_to<typename weak_traits<T>::key_type>,
         class Allocator = std::allocator<T>
 >
-class rh_weak_hash_table
+class weak_hash_table_base
 {
 public:
     using weak_value_type       = T;
@@ -44,22 +44,6 @@ private:
     static constexpr size_t hash_code_mask_ =
             (size_t(1) << number_of_hash_bits_) - 1;
 
-    // This class lifts the client-provided hasher to a hasher that masks out
-    // the high bit.
-    class real_hasher
-    {
-    public:
-        explicit real_hasher(const Hash& hash) : hash_(hash) { }
-
-        size_t operator()(const key_type& key) const
-        {
-            return hash_(key) & hash_code_mask_;
-        }
-
-    private:
-        Hash hash_;
-    };
-
     // We store the weak pointers in buckets along with a used bit and the
     // hash code for each bucket. hash_code_ is only valid if ptr_ is non-null.
     class Bucket
@@ -79,7 +63,7 @@ private:
         size_t          used_ : 1,
                 hash_code_ : number_of_hash_bits_;
 
-        friend class rh_weak_hash_table;
+        friend class weak_hash_table_base;
     };
 
     using bucket_allocator_type =
@@ -94,104 +78,21 @@ private:
 public:
 
     /// Constructs a new, empty weak hash table of default bucket count.
-    rh_weak_hash_table()
-            : rh_weak_hash_table(default_bucket_count)
+    weak_hash_table_base()
+            : weak_hash_table_base(default_bucket_count)
     { }
 
     /// Constructs a new, empty weak hash table of the given
     /// bucket count.
-    explicit rh_weak_hash_table(
-            size_t bucket_count,
-            const hasher& hash = hasher(),
-            const key_equal& equal = key_equal(),
-            const allocator_type& allocator = allocator_type())
-            : rh_weak_hash_table(bucket_count,
-                                 real_hasher(hash),
-                                 equal,
-                                 bucket_allocator_type(allocator),
-                                 weak_value_allocator_type(allocator))
-    { }
-
-    /// Constructs a new, empty weak hash table of the given
-    /// bucket count, using the given allocator.
-    rh_weak_hash_table(
-            size_t bucket_count,
-            const allocator_type& allocator)
-            : rh_weak_hash_table(bucket_count, hasher(), key_equal(), allocator)
-    { }
-
-    /// Constructs a new, empty weak hash table of the given bucket count,
-    /// using the given hasher and allocator.
-    rh_weak_hash_table(
-            size_t bucket_count,
-            const hasher& hash,
-            const allocator_type& allocator)
-            : rh_weak_hash_table(bucket_count, hash, key_equal(), allocator)
-    { }
-
-    /// Constructs a new, empty weak hash table of default bucket count,
-    /// using the given allocator.
-    rh_weak_hash_table(
-            const allocator_type& allocator)
-            : rh_weak_hash_table(default_bucket_count,
-                                 hasher(),
-                                 key_equal(),
-                                 allocator)
-    { }
-
-    /// Constructs a new weak hash table of the given bucket count,
-    /// filling it with elements from the range [first, last).
-    template <class InputIt>
-    rh_weak_hash_table(InputIt first, InputIt last,
-                       size_t bucket_count = default_bucket_count,
-                       const hasher& hash = hasher(),
-                       const key_equal& equal = key_equal(),
-                       const allocator_type& allocator = allocator_type())
-            : rh_weak_hash_table(bucket_count, hash, equal, allocator)
-    {
-        for ( ; first != last; ++first) {
-            insert(*first);
-        }
-    }
-
-    /// Constructs a new weak hash table of the given bucket count,
-    /// using the given allocator, and filling it with elements from
-    /// the range [first, last).
-    template <class InputIt>
-    rh_weak_hash_table(InputIt first, InputIt last,
-                       size_t bucket_count,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(first, last, bucket_count, hasher(), key_equal(),
-                                 allocator)
-    { }
-
-    /// Constructs a new weak hash table of the given bucket count,
-    /// using the given allocator and hasher, and filling it with
-    /// elements from the range [first, last).
-    template <class InputIt>
-    rh_weak_hash_table(InputIt first, InputIt last,
-                       size_t bucket_count,
-                       const hasher& hash,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(first, last, bucket_count, hash, key_equal(),
-                                 allocator)
-    { }
-
-private:
-    /// Private constructor, takes bucket_allocator_ and
-    // weak_value_allocator_ separately. Note that only
-    // bucket_allocator_ is used to allocate, but weak_value_allocator_
-    // is used to construct and destroy.
-    rh_weak_hash_table(
-            size_t bucket_count,
-            const real_hasher& hash,
-            const key_equal& equal,
-            const bucket_allocator_type& bucket_allocator,
-            const weak_value_allocator_type& weak_value_allocator)
-            : hash_(hash)
+    explicit weak_hash_table_base(
+        size_t bucket_count,
+        const hasher& hash = hasher(),
+        const key_equal& equal = key_equal(),
+        const allocator_type& allocator = allocator_type())
+            : hasher_(hash)
             , equal_(equal)
-            , bucket_allocator_(bucket_allocator)
-            , weak_value_allocator_(weak_value_allocator)
+            , bucket_allocator_(allocator)
+            , weak_value_allocator_(allocator)
             , max_load_factor_(default_max_load_factor)
             , buckets_(bucket_count, bucket_allocator_)
             , size_(0)
@@ -199,47 +100,107 @@ private:
         init_buckets_();
     }
 
-public:
+    /// Constructs a new, empty weak hash table of the given
+    /// bucket count, using the given allocator.
+    weak_hash_table_base(
+        size_t bucket_count,
+        const allocator_type& allocator)
+            : weak_hash_table_base(bucket_count, hasher(), key_equal(), allocator)
+    { }
 
-    /// Copy constructor.
-    rh_weak_hash_table(const rh_weak_hash_table& other)
-            : rh_weak_hash_table(other.size(),
-                                 other.hash_,
-                                 other.bucket_allocator_,
-                                 other.weak_value_allocator_)
+    /// Constructs a new, empty weak hash table of the given bucket count,
+    /// using the given hasher and allocator.
+    weak_hash_table_base(
+        size_t bucket_count,
+        const hasher& hash,
+        const allocator_type& allocator)
+            : weak_hash_table_base(bucket_count, hash, key_equal(), allocator)
+    { }
+
+    /// Constructs a new, empty weak hash table of default bucket count,
+    /// using the given allocator.
+    explicit weak_hash_table_base(
+        const allocator_type& allocator)
+            : weak_hash_table_base(default_bucket_count,
+                                   hasher(),
+                                   key_equal(),
+                                   allocator)
+    { }
+
+    /// Constructs a new weak hash table of the given bucket count,
+    /// filling it with elements from the range [first, last).
+    template <class InputIt>
+    weak_hash_table_base(
+        InputIt first, InputIt last,
+        size_t bucket_count = default_bucket_count,
+        const hasher& hash = hasher(),
+        const key_equal& equal = key_equal(),
+        const allocator_type& allocator = allocator_type())
+            : weak_hash_table_base(bucket_count, hash, equal, allocator)
     {
-        for (const auto& each : other) {
-            insert(each);
-        }
+        insert(first, last);
     }
 
-    /// Copy constructor with allocator.
-    rh_weak_hash_table(const rh_weak_hash_table& other,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(other.size(),
-                                 other.hash_,
-                                 allocator,
-                                 allocator)
+    /// Constructs a new weak hash table of the given bucket count,
+    /// using the given allocator, and filling it with elements from
+    /// the range [first, last).
+    template <class InputIt>
+    weak_hash_table_base(
+            InputIt first, InputIt last,
+            size_t bucket_count,
+            const allocator_type& allocator)
+            : weak_hash_table_base(first, last, bucket_count,
+                                   hasher(), key_equal(), allocator)
+    { }
+
+    /// Constructs a new weak hash table of the given bucket count,
+    /// using the given allocator and hasher, and filling it with
+    /// elements from the range [first, last).
+    template <class InputIt>
+    weak_hash_table_base(
+        InputIt first, InputIt last,
+        size_t bucket_count,
+        const hasher& hash,
+        const allocator_type& allocator)
+            : weak_hash_table_base(first, last, bucket_count,
+                                   hash, key_equal(), allocator)
+    { }
+
+    /// Copy constructor.
+    weak_hash_table_base(const weak_hash_table_base& other)
+            : weak_hash_table_base(other, other.get_allocator())
+    { }
+
+private:
+    size_t min_bucket_count_() const noexcept
     {
-        for (const auto& each : other) {
-            insert(each);
-        }
+        return size_t(size() / max_load_factor()) + 1;
+    }
+
+public:
+    /// Copy constructor with allocator.
+    weak_hash_table_base(const weak_hash_table_base& other,
+                         const allocator_type& allocator)
+            : weak_hash_table_base(other.min_bucket_count_(),
+                                   other.hash_,
+                                   other.equal_,
+                                   allocator)
+    {
+        max_load_factor(other.max_load_factor());
+        insert(other.begin(), other.end());
     }
 
     /// Move constructor.
-    rh_weak_hash_table(rh_weak_hash_table&& other)
-            : rh_weak_hash_table(0,
-                                 other.hash_,
-                                 other.bucket_allocator_,
-                                 other.weak_value_allocator_)
+    weak_hash_table_base(weak_hash_table_base&& other)
+            : weak_hash_table_base(0)
     {
         swap(other);
     }
 
     /// Move constructor with allocator.
-    rh_weak_hash_table(rh_weak_hash_table&& other,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(0, other.hash_, allocator, allocator)
+    weak_hash_table_base(weak_hash_table_base&& other,
+                         const allocator_type& allocator)
+            : weak_hash_table_base(0)
     {
         swap(other);
         bucket_allocator_ = allocator;
@@ -247,40 +208,56 @@ public:
     }
 
     /// Constructs from an initializer list of values.
-    rh_weak_hash_table(std::initializer_list<strong_value_type> elements,
-                       size_t bucket_count = default_bucket_count,
-                       const hasher& hash = hasher(),
-                       const key_equal& equal = key_equal(),
-                       const allocator_type& allocator = allocator_type())
-            : rh_weak_hash_table(bucket_count, hash, equal, allocator)
+    weak_hash_table_base(std::initializer_list<strong_value_type> elements,
+                         size_t bucket_count = default_bucket_count,
+                         const hasher& hash = hasher(),
+                         const key_equal& equal = key_equal(),
+                         const allocator_type& allocator = allocator_type())
+            : weak_hash_table_base(bucket_count, hash, equal, allocator)
     {
-        for (auto strong : elements) {
-            insert(std::move(strong));
-        }
+        insert(elements.begin(), elements.end());
     }
 
     /// Constructs from an initializer list of values, with the given
     /// bucket count and allocator.
-    rh_weak_hash_table(std::initializer_list<strong_value_type> elements,
-                       size_t bucket_count,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(elements, bucket_count, hasher(),
-                                 key_equal(), allocator)
+    weak_hash_table_base(std::initializer_list<strong_value_type> elements,
+                         size_t bucket_count,
+                         const allocator_type& allocator)
+            : weak_hash_table_base(elements, bucket_count, hasher(),
+                                   key_equal(), allocator)
     { }
 
     /// Constructs from an initializer list of values, with the given
     /// bucket count, hasher, and allocator.
-    rh_weak_hash_table(std::initializer_list<strong_value_type> elements,
-                       size_t bucket_count,
-                       const hasher& hash,
-                       const allocator_type& allocator)
-            : rh_weak_hash_table(elements, bucket_count, hash,
-                                 key_equal(), allocator)
+    weak_hash_table_base(std::initializer_list<strong_value_type> elements,
+                         size_t bucket_count,
+                         const hasher& hash,
+                         const allocator_type& allocator)
+            : weak_hash_table_base(elements, bucket_count, hash,
+                                   key_equal(), allocator)
     { }
 
-    ~rh_weak_hash_table()
+    ~weak_hash_table_base()
     {
         clear();
+    }
+
+    /// Returns the allocator.
+    allocator_type get_allocator() const
+    {
+        return {bucket_allocator_};
+    }
+
+    /// Returns the key equality predicate.
+    key_equal key_eq() const
+    {
+        return equal_;
+    }
+
+    /// Returns the hash function.
+    hasher hash_function() const
+    {
+        return hasher_;
     }
 
     /// If weak pointers have expired, an empty hash table may appear
@@ -384,12 +361,12 @@ public:
     }
 
     /// Swaps this weak hash table with another in constant time.
-    void swap(rh_weak_hash_table& other)
+    void swap(weak_hash_table_base& other)
     {
         using std::swap;
         swap(buckets_, other.buckets_);
         swap(size_, other.size_);
-        swap(hash_, other.hash_);
+        swap(hasher_, other.hasher_);
         swap(equal_, other.equal_);
         swap(bucket_allocator_, other.bucket_allocator_);
         swap(weak_value_allocator_, other.weak_value_allocator_);
@@ -463,7 +440,7 @@ public:
     }
 
 private:
-    real_hasher hash_;
+    hasher hasher_;
     key_equal equal_;
     bucket_allocator_type bucket_allocator_;
     weak_value_allocator_type weak_value_allocator_;
@@ -529,7 +506,7 @@ private:
     template <class KeyLike>
     Bucket* lookup_(const KeyLike& key)
     {
-        auto const_this = const_cast<const rh_weak_hash_table*>(this);
+        auto const_this = const_cast<const weak_hash_table_base*>(this);
         auto bucket = const_this->lookup_(key);
         return const_cast<Bucket*>(bucket);
     }
@@ -588,6 +565,11 @@ private:
         }
     }
 
+    size_t hash_(const key_type& key) const
+    {
+        return hasher_(key) & hash_code_mask_;
+    }
+
     void destroy_bucket_(Bucket& bucket)
     {
         std::allocator_traits<weak_value_allocator_type>::destroy(
@@ -627,7 +609,7 @@ template <
         class KeyEqual,
         class Allocator
 >
-class rh_weak_hash_table<T, Hash, KeyEqual, Allocator>::iterator
+class weak_hash_table_base<T, Hash, KeyEqual, Allocator>::iterator
         : public std::iterator<std::forward_iterator_tag, T>
 {
 public:
@@ -686,7 +668,7 @@ template <
         class KeyEqual,
         class Allocator
 >
-class rh_weak_hash_table<T, Hash, KeyEqual, Allocator>::const_iterator
+class weak_hash_table_base<T, Hash, KeyEqual, Allocator>::const_iterator
         : public std::iterator<std::forward_iterator_tag, const T>
 {
 public:
@@ -744,10 +726,10 @@ private:
 };
 
 template <class T, class Hash, class KeyEqual, class Allocator>
-void swap(rh_weak_hash_table<T, Hash, KeyEqual, Allocator>& a,
-          rh_weak_hash_table<T, Hash, KeyEqual, Allocator>& b)
+void swap(weak_hash_table_base<T, Hash, KeyEqual, Allocator>& a,
+          weak_hash_table_base<T, Hash, KeyEqual, Allocator>& b)
 {
-    a.swap(b);
+
 }
 
 } // end namespace weak::detail
