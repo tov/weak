@@ -369,12 +369,14 @@ public:
     }
 
     /// Is the given key mapped by this hash table?
-    bool member(const key_type& key) const
+    template <class KeyLike>
+    bool member(const KeyLike& key) const
     {
         return lookup_(key) != nullptr;
     }
 
-    size_t count(const key_type& key) const
+    template <class KeyLike>
+    size_t count(const KeyLike& key) const
     {
         return member(key)? 1 : 0;
     }
@@ -382,7 +384,8 @@ public:
     class iterator;
     class const_iterator;
 
-    iterator find(const key_type& key)
+    template <class KeyLike>
+    iterator find(const KeyLike& key)
     {
         if (auto bucket = lookup_(key)) {
             return {bucket, buckets_.end()};
@@ -391,7 +394,8 @@ public:
         }
     }
 
-    const_iterator find(const key_type& key) const
+    template <class KeyLike>
+    const_iterator find(const KeyLike& key) const
     {
         if (auto bucket = lookup_(key)) {
             return {bucket, buckets_.end()};
@@ -467,7 +471,8 @@ private:
         }
     }
 
-    const Bucket* lookup_(const key_type& key) const
+    template <typename KeyLike>
+    const Bucket* lookup_(const KeyLike& key) const
     {
         size_t hash_code = hash_(key);
         size_t pos = which_bucket_(hash_code);
@@ -493,7 +498,8 @@ private:
         }
     }
 
-    Bucket* lookup_(const key_type& key)
+    template <typename KeyLike>
+    Bucket* lookup_(const KeyLike& key)
     {
         auto const_this = const_cast<const rh_weak_hash_table*>(this);
         auto bucket = const_this->lookup_(key);
@@ -532,7 +538,7 @@ private:
 
             // If not expired, but matches the value to insert, replace.
             auto key = weak_trait::key(value);
-            if (hash_code == bucket.hash_code_ && equal_(*bucket_key, *key)) {
+            if (hash_code == bucket.hash_code_ && equal_(*key, *bucket_key)) {
                 bucket.value_ = std::move(value);
                 return;
             }

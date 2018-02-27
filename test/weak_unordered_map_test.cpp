@@ -11,9 +11,12 @@ using namespace std;
 TEST_CASE("weak_key_unordered_map")
 {
     weak_key_unordered_map<string, int> map;
-    weak_key_unordered_map<string, int>::iterator iter = map.find("hello");
-    weak_key_unordered_map<string, int>::iterator end = map.end();
-    CHECK( iter == end );
+    CHECK( map.find("hello") == map.end() );
+
+    auto hello = make_shared<string>("hello");
+    map.insert({hello, 5});
+
+    CHECK( map.find("hello") != map.end() );
 }
 
 TEST_CASE("weak_value_unordered_map")
