@@ -45,13 +45,10 @@ struct weak_key_pair
 
     static const key_type* key(const view_type& view)
     {
-        if (view.first)
-            return view.first.get();
-        else
-            return nullptr;
+        return view.first.get();
     }
 
-    static const key_type& key(const strong_type& strong)
+    static const key_type* key(const strong_type& strong)
     {
         return strong.first.get();
     }

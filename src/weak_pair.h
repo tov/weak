@@ -47,10 +47,7 @@ struct weak_pair
 
     static const key_type* key(const view_type& view)
     {
-        if (view.first)
-            return view.first.get();
-        else
-            return nullptr;
+        return view.first.get();
     }
 
     static strong_type move(view_type& view)

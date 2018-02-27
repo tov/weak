@@ -482,9 +482,9 @@ private:
                 return nullptr;
 
             if (hash_code == bucket.hash_code_) {
-                auto locked = bucket.value_.lock();
-                if (const auto* key = weak_trait::key(locked))
-                    if (equal_(*locked, *key))
+                auto bucket_value_locked = bucket.value_.lock();
+                if (const auto* bucket_key = weak_trait::key(bucket_value_locked))
+                    if (equal_(key, *bucket_key))
                         return &bucket;
             }
 
@@ -624,12 +624,12 @@ public:
         return old;
     }
 
-    bool operator==(iterator other)
+    bool operator==(iterator other) const
     {
         return base_ == other.base_;
     }
 
-    bool operator!=(iterator other)
+    bool operator!=(iterator other) const
     {
         return base_ != other.base_;
     }
@@ -687,12 +687,12 @@ public:
         return old;
     }
 
-    bool operator==(const_iterator other)
+    bool operator==(const_iterator other) const
     {
         return base_ == other.base_;
     }
 
-    bool operator!=(const_iterator other)
+    bool operator!=(const_iterator other) const
     {
         return base_ != other.base_;
     }

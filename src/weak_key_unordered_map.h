@@ -11,13 +11,11 @@ template<class Key, class Value,
         class KeyEqual = std::equal_to<Key>,
         class Allocator = std::allocator<weak_key_pair<Key, Value>>>
 class weak_key_unordered_map
-        : public detail::weak_unordered_map_base<weak_key_pair < Key, Value>,
-          Hash, KeyEqual, Allocator>
+        : public detail::weak_unordered_map_base<weak_key_pair<Key, Value>, Hash, KeyEqual, Allocator>
 {
-using BaseClass = detail::weak_unordered_map_base <weak_key_pair<Key, Value>,
-Hash, KeyEqual, Allocator>;
+    using BaseClass = detail::weak_unordered_map_base<weak_key_pair<Key, Value>, Hash, KeyEqual, Allocator>;
 public:
-using BaseClass::weak_unordered_map_base;
+    using BaseClass::weak_unordered_map_base;
 };
 
 template<class Key, class Value, class Hash, class KeyEqual, class Allocator>

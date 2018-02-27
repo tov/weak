@@ -20,12 +20,18 @@ struct weak_traits
     /// the type of keys
     using key_type = typename T::key_type;
 
-    /// gets a pointer to a key from a view_type or a strong_type.
-    using T::key;
+    template <class U>
+    static const key_type* key(const U& view)
+    {
+        return T::key(view);
+    }
 
     /// steals a view_type, turning it into a strong_type
     /// PRECONDITION: the view_type is not expired
-    using T::move;
+    static const strong_type move(view_type& view)
+    {
+        return T::move(view);
+    }
 };
 
 template <class T>
@@ -43,7 +49,7 @@ struct weak_traits<std::weak_ptr<T>>
 
     // This works for both view_type and strong_type, since they are the
     // same.
-    static key_type* key(const view_type& view)
+    static const key_type* key(const view_type& view)
     {
         return view.get();
     }
