@@ -28,7 +28,7 @@ struct weak_traits
 
     /// steals a view_type, turning it into a strong_type
     /// PRECONDITION: the view_type is not expired
-    static const strong_type move(view_type& view)
+    static strong_type move(view_type& view)
     {
         return T::move(view);
     }

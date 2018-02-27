@@ -14,14 +14,31 @@ class weak_key_unordered_map
         : public detail::weak_unordered_map_base<weak_key_pair<Key, Value>, Hash, KeyEqual, Allocator>
 {
     using BaseClass = detail::weak_unordered_map_base<weak_key_pair<Key, Value>, Hash, KeyEqual, Allocator>;
+    using typename BaseClass::Bucket;
 public:
     using BaseClass::weak_unordered_map_base;
 
     Value& operator[](const std::shared_ptr<const Key>& key)
     {
-        if (!BaseClass::member(*key))
-            BaseClass::insert({key, Value()});
-        return (*BaseClass::find(*key)).second;
+        Value* result;
+
+        BaseClass::insert_helper_(
+                *key,
+                [&](Bucket& bucket) {
+                    BaseClass::construct_bucket_(bucket, key, Value());
+                    result = &bucket.value().second;
+                },
+                [&](Bucket& bucket) {
+                    bucket.value().first = key;
+                    bucket.value().second = Value();
+                    result = &bucket.value().second;
+                },
+                [&](Bucket& bucket) {
+                    bucket.value().first = key;
+                    result = &bucket.value().second;
+                });
+
+        return *result;
     }
 };
 

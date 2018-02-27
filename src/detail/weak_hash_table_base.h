@@ -44,34 +44,37 @@ private:
     static constexpr size_t hash_code_mask_ =
             (size_t(1) << number_of_hash_bits_) - 1;
 
+protected:
     // We store the weak pointers in buckets along with a used bit and the
     // hash code for each bucket. hash_code_ is only valid if ptr_ is non-null.
     class Bucket
     {
     public:
-        Bucket()
-                : used_(0), hash_code_(0)
-        { }
-
-        bool occupied() const
+        weak_value_type& value()
         {
-            return used_ && !value_.expired();
+            return value_;
         }
 
     private:
         weak_value_type value_;
-        size_t          used_ : 1,
-                hash_code_ : number_of_hash_bits_;
+        size_t          used_      : 1,
+                        hash_code_ : number_of_hash_bits_;
+
+        bool occupied_() const
+        {
+            return used_ && !value_.expired();
+        }
 
         friend class weak_hash_table_base;
     };
 
+private:
     using bucket_allocator_type =
-    typename std::allocator_traits<allocator_type>
-    ::template rebind_alloc<Bucket>;
+        typename std::allocator_traits<allocator_type>
+            ::template rebind_alloc<Bucket>;
     using weak_value_allocator_type =
-    typename std::allocator_traits<allocator_type>
-    ::template rebind_alloc<weak_value_type>;
+        typename std::allocator_traits<allocator_type>
+            ::template rebind_alloc<weak_value_type>;
 
     using vector_t = detail::raw_vector<Bucket, bucket_allocator_type>;
 
@@ -315,6 +318,7 @@ public:
         }
     }
 
+    /// Reserves room for `extra` additional elements, sort of.
     void reserve(size_t extra)
     {
         remove_expired();
@@ -324,14 +328,13 @@ public:
     /// Inserts an element.
     void insert(const strong_value_type& value)
     {
-        maybe_grow_();
-        insert_(hash_(*weak_trait::key(value)), value);
+        size_t hash_code = hash_(*weak_trait::key(value));
+        insert_(hash_code, value);
     }
 
     /// Inserts an element.
     void insert(strong_value_type&& value)
     {
-        maybe_grow_();
         size_t hash_code = hash_(*weak_trait::key(value));
         insert_(hash_code, std::move(value));
     }
@@ -477,7 +480,7 @@ private:
 
         for (Bucket& bucket : old_buckets) {
             if (bucket.used_) {
-                auto&& value = bucket.value_.lock();
+                view_value_type value = bucket.value_.lock();
                 if (weak_trait::key(value)) {
                     insert_(bucket.hash_code_, weak_trait::move(value));
                 }
@@ -520,40 +523,127 @@ private:
         return const_cast<Bucket*>(bucket);
     }
 
-    // Based on https://www.sebastiansylvan.com/post/robin-hood-hashing-should-be-your-default-hash-table-implementation/
-    void insert_(size_t hash_code, strong_value_type value)
+    /// Places `value` in the table, starting at `pos` and moving forward.
+    void steal_(size_t hash_code, size_t pos, strong_value_type&& value)
     {
+        size_t dist = probe_distance_(pos, which_bucket_(hash_code));
+
+        for (;;) {
+            Bucket& bucket = buckets_[pos];
+
+            if (!bucket.used_) {
+                construct_bucket_(bucket, std::move(value));
+                bucket.hash_code_ = hash_code;
+                return;
+            }
+
+            if (bucket.value_.expired()) {
+                bucket.value_ = std::move(value);
+                bucket.hash_code_ = hash_code;
+                return;
+            }
+
+            size_t existing_distance =
+                    probe_distance_(pos, which_bucket_(bucket.hash_code_));
+            if (dist > existing_distance) {
+                auto bucket_locked = bucket.value_.lock();
+                bucket.value_ = std::exchange(value, weak_trait::move(bucket_locked));
+                // swap doesn't work because bitfield:
+                size_t tmp = bucket.hash_code_;
+                bucket.hash_code_ = hash_code;
+                hash_code = tmp;
+                dist = existing_distance;
+            }
+
+            pos = next_bucket_(pos);
+            ++dist;
+        }
+    }
+
+    void insert_(size_t hash_code, const strong_value_type& value)
+    {
+        insert_helper_(hash_code, *weak_trait::key(value),
+                       [&](Bucket& bucket) {
+                           construct_bucket_(bucket, value);
+                       },
+                       [&](Bucket& bucket) {
+                           bucket.value_ = value;
+                       },
+                       [&](Bucket& bucket) {
+                           bucket.value_ = value;
+                       });
+    }
+
+    void insert_(size_t hash_code, strong_value_type&& value)
+    {
+        insert_helper_(hash_code, *weak_trait::key(value),
+                       [&](Bucket& bucket) {
+                           construct_bucket_(bucket, std::move(value));
+                       },
+                       [&](Bucket& bucket) {
+                           bucket.value_ = std::move(value);
+                       },
+                       [&](Bucket& bucket) {
+                           bucket.value_ = std::move(value);
+                       });
+    }
+
+protected:
+    template <class... Args>
+    void construct_bucket_(Bucket& bucket, Args&&... args)
+    {
+        std::allocator_traits<weak_value_allocator_type>::construct(
+                weak_value_allocator_,
+                &bucket.value_,
+                std::forward<Args>(args)...);
+        bucket.used_ = 1;
+    }
+
+    /// Expects to call exactly one of the paramters `on_uninit`, `on_init`, and
+    /// `on_found`, which will (re-)initialize the bucket with the given key.
+    template <class OnUninit, class OnInit, class OnFound>
+    void insert_helper_(const key_type& key,
+                        OnUninit on_uninit, OnInit on_init, OnFound on_found)
+    {
+        insert_helper_(hash_(key), key, on_uninit, on_init, on_found);
+    }
+
+private:
+
+    /// Expects to call exactly one of the paramters `on_uninit`, `on_init`, and
+    /// `on_found`, which will (re-)initialize the bucket with the given key.
+    ///
+    /// PRECONDITION: hash_code == hash_(key)
+    template <class OnUninit, class OnInit, class OnFound>
+    void insert_helper_(size_t hash_code, const key_type& key,
+                        OnUninit on_uninit, OnInit on_init, OnFound on_found)
+    {
+        maybe_grow_();
+
         size_t pos = which_bucket_(hash_code);
         size_t dist = 0;
 
         for (;;) {
             Bucket& bucket = buckets_[pos];
 
-            // If the bucket is unoccupied, use it:
             if (!bucket.used_) {
-                std::allocator_traits<weak_value_allocator_type>::construct(
-                        weak_value_allocator_,
-                        &bucket.value_,
-                        std::move(value));
+                on_uninit(bucket);
                 bucket.hash_code_ = hash_code;
-                bucket.used_ = 1;
                 ++size_;
                 return;
             }
 
-            // Check if the pointer is expired. If it is, use this slot.
             auto bucket_locked = bucket.value_.lock();
             auto bucket_key = weak_trait::key(bucket_locked);
             if (!bucket_key) {
-                bucket.value_ = std::move(value);
+                on_init(bucket);
                 bucket.hash_code_ = hash_code;
                 return;
             }
 
             // If not expired, but matches the value to insert, replace.
-            auto key = weak_trait::key(value);
-            if (hash_code == bucket.hash_code_ && equal_(*key, *bucket_key)) {
-                bucket.value_ = std::move(value);
+            if (hash_code == bucket.hash_code_ && equal_(key, *bucket_key)) {
+                on_found(bucket);
                 return;
             }
 
@@ -561,12 +651,11 @@ private:
             size_t existing_distance =
                     probe_distance_(pos, which_bucket_(bucket.hash_code_));
             if (dist > existing_distance) {
-                bucket.value_ = std::exchange(value,
-                                              weak_trait::move(bucket_locked));
-                size_t tmp = bucket.hash_code_;
+                steal_(bucket.hash_code_, next_bucket_(pos),
+                       weak_trait::move(bucket_locked));
+                on_init(bucket);
                 bucket.hash_code_ = hash_code;
-                hash_code = tmp;
-                dist = existing_distance;
+                return;
             }
 
             pos = next_bucket_(pos);
@@ -666,7 +755,7 @@ private:
 
     void find_next_()
     {
-        while (base_ != limit_ && !base_->occupied())
+        while (base_ != limit_ && !base_->occupied_())
             ++base_;
     }
 };
@@ -729,7 +818,7 @@ private:
 
     void find_next_()
     {
-        while (base_ != limit_ && !base_->occupied())
+        while (base_ != limit_ && !base_->occupied_())
             ++base_;
     }
 };
