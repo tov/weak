@@ -12,7 +12,7 @@ template<
         class Hash = std::hash<Key>,
         class KeyEqual = std::equal_to<Key>,
         class Allocator = std::allocator<weak_pair<Key, Value>>>
-class weak_unordered_map
+class weak_key_weak_value_unordered_map
         : public detail::weak_unordered_map_base<weak_pair<Key, Value>,
                                                  Hash, KeyEqual, Allocator>
 {
@@ -68,7 +68,7 @@ public:
         Bucket& bucket_;
         std::shared_ptr<Value> value_ptr_;
 
-        friend class weak_unordered_map;
+        friend class weak_key_weak_value_unordered_map;
     };
 
     proxy operator[](const std::shared_ptr<const Key>& key)
@@ -96,8 +96,8 @@ public:
 };
 
 template<class Key, class Value, class Hash, class KeyEqual, class Allocator>
-void swap(weak_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-          weak_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
+void swap(weak_key_weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
+          weak_key_weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
 {
     a.swap(b);
 }
