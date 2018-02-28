@@ -49,4 +49,7 @@ TEST_CASE("growing")
     CHECK( count == 999 );
 
     CHECK( 1000 == set.size() );
+
+    CHECK( set == set );
+    CHECK( set != weak_unordered_set<int>{} );
 }

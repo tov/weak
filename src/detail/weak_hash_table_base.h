@@ -722,6 +722,11 @@ public:
         find_next_();
     }
 
+    std::unique_ptr<view_value_type> operator->() const
+    {
+        return std::make_unique<view_value_type>(operator*());
+    }
+
     view_value_type operator*() const
     {
         return base_->value_.lock();
@@ -784,6 +789,11 @@ public:
     const_iterator(iterator other)
             : base_(other.base_), limit_(other.limit_)
     { }
+
+    std::unique_ptr<const_view_value_type> operator->() const
+    {
+        return std::make_unique<const_view_value_type>(operator*());
+    }
 
     const_view_value_type operator*() const
     {
