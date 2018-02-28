@@ -1,4 +1,4 @@
-# weak: weak hash tables for C++17
+# weak++: weak hash tables for C++17
 
 This library provides four forms of weak hash tables:
 
