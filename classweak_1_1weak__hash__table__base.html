@@ -329,7 +329,7 @@ class weak::weak_hash_table_base&lt; T, Hash, KeyEqual, Allocator &gt;</h3>
 <p>Provides the common functionality for all the weak hash tables, including both sets and maps.</p>
 <p>This is designed to work with element types that implement the <code><a class="el" href="structweak_1_1weak__traits.html" title="Controls how a weak hash table uses its weak elements. ">weak_traits</a></code> interface. This includes <code>weak_ptr&lt;T&gt;</code> and the various weak pair types provided by this library. Using a weak pair results in a weak map, whereas using <code>weak_ptr&lt;T&gt;</code> results in a weak set. Usually this should be instantiated through one of the derived classes, and this class should not be used directly. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00032">32</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00074">74</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af65bcc84413bcb8d0daa821822506ef9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af65bcc84413bcb8d0daa821822506ef9">&#9670;&nbsp;</a></span>weak_hash_table_base() <span class="overload">[1/9]</span></h2>
@@ -381,7 +381,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs a new, empty weak hash table of the given bucket count. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00122">122</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00164">164</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -423,7 +423,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs a new, empty weak hash table of the given bucket count, using the given allocator. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00140">140</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00182">182</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -471,7 +471,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs a new, empty weak hash table of the given bucket count, using the given hasher and allocator. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00148">148</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00190">190</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -503,7 +503,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs a new, empty weak hash table of default bucket count, using the given allocator. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00157">157</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00199">199</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -571,7 +571,7 @@ template&lt;class InputIt &gt; </div>
 
 <p>Constructs a new weak hash table of the given bucket count, filling it with elements from the range [first, last). </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00168">168</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00210">210</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -627,7 +627,7 @@ template&lt;class InputIt &gt; </div>
 
 <p>Constructs a new weak hash table of the given bucket count, using the given allocator, and filling it with elements from the range [first, last). </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00183">183</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00225">225</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -689,7 +689,7 @@ template&lt;class InputIt &gt; </div>
 
 <p>Constructs a new weak hash table of the given bucket count, using the given allocator and hasher, and filling it with elements from the range [first, last). </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00195">195</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00237">237</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -737,7 +737,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs from an initializer list of values, with the given bucket count and allocator. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00251">251</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00293">293</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -791,7 +791,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Constructs from an initializer list of values, with the given bucket count, hasher, and allocator. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00260">260</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00302">302</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -836,7 +836,7 @@ template&lt;class... Args&gt; </div>
 
 <p>Given a bucket, which must be uninitialized emplaces the value in it and marks it used. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00641">641</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00683">683</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -867,7 +867,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>If weak pointers have expired, an empty hash table may appear non-empty. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00294">294</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00336">336</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -899,7 +899,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Erases the element if the given key, returning whether an element was actually erased. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00391">391</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00433">433</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -955,7 +955,7 @@ template&lt;class OnUninit , class OnInit , class OnFound &gt; </div>
 
 <p>Expects to call exactly one of the parameters <code>on_uninit</code>, <code>on_init</code>, and <code>on_found</code>, which will (re-)initialize the bucket with the given key. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00653">653</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00695">695</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -987,7 +987,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 <p>The current load factor. </p>
 <p>This over-approximates the proportion of used buckets. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00308">308</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00350">350</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -1020,7 +1020,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 <p>Sets the maximum load factor. </p>
 <p><em>PRECONDITION</em>: 0 &lt; <code>new_value</code> &lt; 1 </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00323">323</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00365">365</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +1051,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Note that because pointers may expire without the table finding out, <a class="el" href="classweak_1_1weak__hash__table__base.html#a9eead69b6dd3f0bcca77a90f2aac1850" title="Note that because pointers may expire without the table finding out, size() is generally an overappro...">size()</a> is generally an overapproximation of the number of elements in the hash table. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00332">332</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00374">374</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>

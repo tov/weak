@@ -130,7 +130,7 @@ class weak::weak_hash_table_base&lt; T, Hash, KeyEqual, Allocator &gt;::iterator
 <p>This iterator is invalidated by any operation that changes the hash table, including a shared pointer expiring.</p>
 <p>This iterator may allow modifying the values, but it does not allow modifying the keys, since that would destroy the hash invariant. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00765">765</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00808">808</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa7748c34382305afb0f86176dd563101"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa7748c34382305afb0f86176dd563101">&#9670;&nbsp;</a></span>operator-&gt;()</h2>
@@ -160,7 +160,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 <p>Provides a pointer view of the iterator. </p>
 <p>Note that because the value type of the iterator does not exist until derereferenced, this operator allocates to return a pointer to it. Thus, <code><a class="el" href="classweak_1_1weak__hash__table__base_1_1iterator.html#a0d2a68d9e6f800a20c7e1a78b5044e25" title="Returns the value indicated by the iterator. ">operator*() const</a></code> is probably more efficient. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00786">786</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00829">829</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
