@@ -136,8 +136,9 @@ protected:
                         hash_code_ : number_of_hash_bits_;
         // INVARIANT:
         //   - !(used_ && tombstone_)
-        //   - if used_ then value_ and hash_code_ are initialized, otherwie
-        //     not
+        //   - if used_ then value_ is initialized, otherwise not
+        //   - if used_ || tombstone_ then hash_code_ is initialized,
+        //     otherwise not
 
         bool occupied_() const
         {
@@ -609,21 +610,21 @@ private:
         for (;;) {
             const Bucket& bucket = buckets_[pos];
 
-            if (!bucket.tombstone_) {
-                if (!bucket.used_)
-                    return nullptr;
-
+            if (bucket.tombstone_ || bucket.used_) {
                 if (dist >
-                        probe_distance_(pos, which_bucket_(bucket.hash_code_)))
+                    probe_distance_(pos, which_bucket_(bucket.hash_code_)))
                     return nullptr;
+            }
 
-                if (hash_code == bucket.hash_code_) {
-                    auto bucket_value_locked = bucket.value_.lock();
-                    if (const auto* bucket_key =
-                            weak_trait::key(bucket_value_locked))
-                        if (equal_(key, *bucket_key))
-                            return &bucket;
-                }
+            if (!bucket.used_)
+                return nullptr;
+
+            if (!bucket.tombstone_ && hash_code == bucket.hash_code_) {
+                auto bucket_value_locked = bucket.value_.lock();
+                if (const auto* bucket_key =
+                        weak_trait::key(bucket_value_locked))
+                    if (equal_(key, *bucket_key))
+                        return &bucket;
             }
 
             pos = next_bucket_(pos);
