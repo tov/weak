@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>weak: weak: weak hash tables for C++17</title>
+<title>weak++: weak++: weak hash tables for C++17</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">weak
+   <div id="projectname">weak++
    </div>
   </td>
  </tr>
@@ -62,11 +62,11 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">weak: weak hash tables for C++17 </div>  </div>
+<div class="title">weak++: weak hash tables for C++17 </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h2>Get It</h2>
-<p>The latest version is available <a href="https://github.com/tov/weak">on GitHub</a>.</p>
+<p>The latest version is available <a href="https://github.com/tov/weakpp">on GitHub</a>.</p>
 <h2>Use It</h2>
 <p>This library provides four forms of weak hash tables:</p>
 <ul>
@@ -77,7 +77,7 @@ $(function() {
 </ul>
 <p>Most of the interfaces of all four classes are common, and documented as part of a shared base class <code><a class="el" href="classweak_1_1weak__hash__table__base.html" title="A weak Robin Hood hash table. ">weak_hash_table_base</a></code>. All the constructors may be found in that class as well.</p>
 <p>Here is a tiny example:</p>
-<div class="fragment"><div class="line">weak_key_unordered_map&lt;string, int&gt; map;</div><div class="line">CHECK( !map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div><div class="line"></div><div class="line"><span class="keyword">auto</span> hello = make_shared&lt;string&gt;(<span class="stringliteral">&quot;hello&quot;</span>);</div><div class="line">map.insert({hello, 5});</div><div class="line">CHECK( map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div><div class="line"></div><div class="line">hello = <span class="keyword">nullptr</span>;</div><div class="line">CHECK( !map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div></div><!-- fragment --><p>For a more realistic example, see <a href="https://github.com/tov/weak/blob/master/test/intern_table.h"><code>intern_table.h</code></a> and <a href="https://github.com/tov/weak/blob/master/test/intern_table.cpp"><code>intern_table.cpp</code></a>. </p>
+<div class="fragment"><div class="line">weak_key_unordered_map&lt;string, int&gt; map;</div><div class="line">CHECK( !map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div><div class="line"></div><div class="line"><span class="keyword">auto</span> hello = make_shared&lt;string&gt;(<span class="stringliteral">&quot;hello&quot;</span>);</div><div class="line">map.insert({hello, 5});</div><div class="line">CHECK( map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div><div class="line"></div><div class="line">hello = <span class="keyword">nullptr</span>;</div><div class="line">CHECK( !map.member(<span class="stringliteral">&quot;hello&quot;</span>) );</div></div><!-- fragment --><p>For a more realistic example, see <a href="https://github.com/tov/weakpp/blob/master/test/intern_table.h"><code>intern_table.h</code></a> and <a href="https://github.com/tov/weakpp/blob/master/test/intern_table.cpp"><code>intern_table.cpp</code></a>. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
