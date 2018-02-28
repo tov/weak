@@ -68,7 +68,7 @@ namespace weak {
 template <
         class T,
         class Hash = std::hash<typename weak_traits<T>::key_type>,
-        class KeyEqual = std::equal_to<typename weak_traits<T>::key_type>,
+        class KeyEqual = std::equal_to<>,
         class Allocator = std::allocator<T>
 >
 class weak_hash_table_base

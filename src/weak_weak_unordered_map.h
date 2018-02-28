@@ -15,7 +15,7 @@ namespace weak {
 template<
         class Key, class Value,
         class Hash = std::hash<Key>,
-        class KeyEqual = std::equal_to<Key>,
+        class KeyEqual = std::equal_to<>,
         class Allocator = std::allocator<weak_weak_pair<Key, Value>>>
 class weak_weak_unordered_map
         : public weak_hash_table_base<weak_weak_pair<Key, Value>,

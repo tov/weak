@@ -18,11 +18,10 @@ class Symbol_table
 {
 private:
     // We store (weak_ptrs to) strings, but we want to look them up by
-    // std::string_view, so we use a hasher and equality for that.
+    // std::string_view, so we use a hasher for that.
     weak::weak_unordered_set<
             std::string,
-            std::hash<std::string_view>,
-            std::equal_to<std::string_view>
+            std::hash<std::string_view>
     > table_;
 
 public:

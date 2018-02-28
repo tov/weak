@@ -13,7 +13,7 @@ namespace weak {
 template <
     class Key,
     class Hash = std::hash<Key>,
-    class KeyEqual = std::equal_to<Key>,
+    class KeyEqual = std::equal_to<>,
     class Allocator = std::allocator<Key>
 >
 class weak_unordered_set :

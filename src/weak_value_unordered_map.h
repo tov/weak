@@ -14,7 +14,7 @@ namespace weak {
 /// lazily removed.
 template<class Key, class Value,
          class Hash = std::hash<Key>,
-         class KeyEqual = std::equal_to<Key>,
+         class KeyEqual = std::equal_to<>,
          class Allocator = std::allocator<weak_value_pair<Key, Value>>
 >
 class weak_value_unordered_map
