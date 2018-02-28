@@ -20,7 +20,7 @@ private:
     weak::weak_unordered_set<
             std::string,
             std::hash<std::string_view>,
-            std::equal_to<>
+            std::equal_to<std::string_view>
     > table_;
 
 public:
