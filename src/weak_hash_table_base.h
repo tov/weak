@@ -101,7 +101,7 @@ private:
     // We're going to steal a bit from the hash codes to store a used bit..
     // So the number of hash bits is one less than the number of bits in size_t.
     static constexpr size_t number_of_hash_bits_ =
-            sizeof(size_t) * CHAR_BIT - 2;
+            sizeof(size_t) * CHAR_BIT - 1;
 
     static constexpr size_t hash_code_mask_ =
             (size_t(1) << number_of_hash_bits_) - 1;
@@ -133,13 +133,10 @@ protected:
     private:
         weak_value_type value_;
         size_t          used_      : 1,
-                        tombstone_ : 1,
                         hash_code_ : number_of_hash_bits_;
         // INVARIANT:
-        //   - !(used_ && tombstone_)
-        //   - if used_ then value_ is initialized, otherwise not
-        //   - if used_ || tombstone_ then hash_code_ is initialized,
-        //     otherwise not
+        //   - if used_ then value_ and hash_code_ are initialized, otherwise
+        //     not
 
         bool occupied_() const
         {
@@ -404,7 +401,7 @@ public:
     {
         for (auto& bucket : buckets_) {
             if (bucket.used_) {
-                destroy_bucket_(bucket, 0);
+                destroy_bucket_(bucket);
             }
         }
 
@@ -414,10 +411,10 @@ public:
     /// Cleans up expired elements. After this, `size()` is accurate.
     void remove_expired()
     {
-        for (auto& bucket : buckets_) {
+        for (size_t i = 0; i < bucket_count(); ++i) {
+            Bucket& bucket = buckets_[i];
             if (bucket.used_ && bucket.value_.expired()) {
-                destroy_bucket_(bucket, 1);
-                --size_;
+                erase_index_(i);
             }
         }
     }
@@ -451,13 +448,63 @@ public:
             insert(*start);
     }
 
+private:
+    bool destroy_range_(size_t start, size_t limit)
+    {
+        for ( ; start != limit; start = next_bucket_(start)) {
+            destroy_bucket_(buckets_[start]);
+            --size_;
+        }
+    }
+
+    static bool in_interval_(size_t start, size_t value, size_t limit)
+    {
+        if (start <= limit)
+            return start <= value && value < limit;
+        else
+            return start <= value || value < limit;
+    }
+
+    /// Removes the bucket at index, shifting if necessary.
+    void erase_index_(size_t index)
+    {
+        size_t dst = index;
+        size_t src = next_bucket_(dst);
+
+        // INVARIANT: [dst, src) to be deleted
+
+        for (;;) {
+            Bucket& bucket = buckets_[src];
+            if (!bucket.used_) break;
+
+            size_t goal_pos = which_bucket_(bucket.hash_code_);
+            size_t dist = probe_distance_(src, goal_pos);
+            if (dist == 0) break;
+
+            if (!bucket.value_.expired()) {
+                if (in_interval_(dst, goal_pos, src)) {
+                    destroy_range_(dst, goal_pos);
+                    buckets_[goal_pos] = std::move(bucket);
+                    dst = next_bucket_(goal_pos);
+                } else {
+                    buckets_[dst] = std::move(bucket);
+                    dst = next_bucket_(dst);
+                }
+            }
+
+            src = next_bucket_(src);
+        }
+
+        destroy_range_(dst, src);
+    }
+
+public:
     /// Erases the element if the given key, returning whether an
     /// element was actually erased.
     bool erase(const key_type& key)
     {
         if (auto bucket_index = lookup_(key)) {
-            destroy_bucket_(buckets_[*bucket_index], 1);
-            --size_;
+            erase_index_(*bucket_index);
             return true;
         } else {
             return false;
@@ -616,16 +663,13 @@ private:
         for (;;) {
             const Bucket& bucket = buckets_[pos];
 
-            if (bucket.tombstone_ || bucket.used_) {
-                if (dist >
-                    probe_distance_(pos, which_bucket_(bucket.hash_code_)))
-                    return std::nullopt;
-            }
-
             if (!bucket.used_)
                 return std::nullopt;
 
-            if (!bucket.tombstone_ && hash_code == bucket.hash_code_) {
+            if (dist > probe_distance_(pos, which_bucket_(bucket.hash_code_)))
+                return std::nullopt;
+
+            if (hash_code == bucket.hash_code_) {
                 auto bucket_value_locked = bucket.value_.lock();
                 if (const auto* bucket_key =
                         weak_trait::key(bucket_value_locked))
@@ -646,7 +690,7 @@ private:
         for (;;) {
             Bucket& bucket = buckets_[pos];
 
-            if (!bucket.used_ || bucket.tombstone_) {
+            if (!bucket.used_) {
                 construct_bucket_(bucket, std::move(value));
                 bucket.hash_code_ = hash_code;
                 return;
@@ -712,7 +756,6 @@ protected:
                 &bucket.value_,
                 std::forward<Args>(args)...);
         bucket.used_ = 1;
-        bucket.tombstone_ = 0;
     }
 
     /// Expects to call exactly one of the parameters `on_uninit`, `on_init`,
@@ -742,7 +785,7 @@ private:
         for (;;) {
             Bucket& bucket = buckets_[pos];
 
-            if (!bucket.used_ || bucket.tombstone_) {
+            if (!bucket.used_) {
                 on_uninit(bucket);
                 bucket.hash_code_ = hash_code;
                 ++size_;
@@ -785,26 +828,29 @@ private:
         return hasher_(key) & hash_code_mask_;
     }
 
-    void destroy_bucket_(Bucket& bucket, size_t tombstone = 0)
+    void destroy_bucket_(Bucket& bucket)
     {
         std::allocator_traits<weak_value_allocator_type>::destroy(
                 weak_value_allocator_,
                 &bucket.value_);
         bucket.used_ = 0;
-        bucket.tombstone_ = tombstone;
     }
 
     void init_buckets_()
     {
         for (auto& bucket : buckets_) {
             bucket.used_ = 0;
-            bucket.tombstone_ = 0;
         }
+    }
+
+    size_t add_bucket_(size_t bucket, ssize_t offset) const
+    {
+        return (bucket + offset) % bucket_count();
     }
 
     size_t next_bucket_(size_t pos) const
     {
-        return (pos + 1) % bucket_count();
+        return add_bucket_(pos, 1);
     }
 
     size_t probe_distance_(size_t actual, size_t preferred) const

@@ -1,7 +1,11 @@
 #include "weak_unordered_set.h"
+
 #include <catch.hpp>
+
+#include <algorithm>
 #include <memory>
 #include <vector>
+#include <unordered_set>
 
 using namespace std;
 using namespace weak;
@@ -52,4 +56,100 @@ TEST_CASE("growing")
 
     CHECK( set == set );
     CHECK( set != weak_unordered_set<int>{} );
+}
+
+class SetTester
+{
+public:
+    void insert(int v)
+    {
+        auto ptr = make_shared<int>(v);
+        holder_.insert(ptr);
+        set_.insert(ptr);
+    }
+
+    void forget(int v)
+    {
+        auto iter = std::find_if(holder_.begin(), holder_.end(),
+                                 [&](auto ptr) { return *ptr == v; });
+        if (iter != holder_.end()) holder_.erase(iter);
+    }
+
+    void erase(int v)
+    {
+        set_.erase(v);
+        forget(v);
+    };
+
+    bool member(int v) const
+    {
+        return set_.member(v);
+    }
+
+    unordered_set<int> members() const
+    {
+        unordered_set<int> result;
+        for (const auto& ptr : holder_) result.insert(*ptr);
+        return result;
+    }
+
+private:
+    using ptr_t = shared_ptr<int>;
+
+    struct Hash
+    {
+        size_t operator()(int v) const
+        {
+            return size_t(v) / 10 * 5;
+        }
+
+        size_t operator()(const ptr_t& ptr) const
+        {
+            return operator()(*ptr);
+        }
+    };
+
+    struct EqualTo
+    {
+        bool operator()(const ptr_t& a, const ptr_t& b) const
+        {
+            return *a == *b;
+        }
+    };
+
+    unordered_set<shared_ptr<int>, Hash, EqualTo> holder_;
+    weak_unordered_set<int, Hash> set_;
+};
+
+TEST_CASE("erase")
+{
+    SetTester tester;
+
+    for (int z = 0; z < 20; ++z) {
+        tester.insert(z);
+    }
+
+    for (int z : tester.members()) {
+        CHECK( tester.member(z) );
+    }
+
+    tester.erase(0);
+
+    for (int z : tester.members()) {
+        CHECK( tester.member(z) );
+    }
+
+    tester.forget(3);
+
+    for (int z : tester.members()) {
+        CHECK( tester.member(z) );
+    }
+
+    tester.forget(4);
+    tester.forget(5);
+    tester.erase(1);
+
+    for (int z : tester.members()) {
+        CHECK( tester.member(z) );
+    }
 }
