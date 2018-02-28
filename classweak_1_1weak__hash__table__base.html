@@ -190,6 +190,14 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classweak_1_1weak__hash__table__base.html#af1a98b52896f874a8bd201ac7b2e62da">~weak_hash_table_base</a> ()</td></tr>
 <tr class="memdesc:af1a98b52896f874a8bd201ac7b2e62da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:af1a98b52896f874a8bd201ac7b2e62da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63ab4996f3b6024fd18e2b05113eda8d"><td class="memItemLeft" align="right" valign="top"><a id="a63ab4996f3b6024fd18e2b05113eda8d"></a>
+<a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classweak_1_1weak__hash__table__base.html#a63ab4996f3b6024fd18e2b05113eda8d">operator=</a> (const <a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a> &amp;other)</td></tr>
+<tr class="memdesc:a63ab4996f3b6024fd18e2b05113eda8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assignment. <br /></td></tr>
+<tr class="separator:a63ab4996f3b6024fd18e2b05113eda8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a295b3680ef7725b7cd2bd9be5f9ec395"><td class="memItemLeft" align="right" valign="top"><a id="a295b3680ef7725b7cd2bd9be5f9ec395"></a>
+<a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classweak_1_1weak__hash__table__base.html#a295b3680ef7725b7cd2bd9be5f9ec395">operator=</a> (<a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a> &amp;&amp;other)</td></tr>
+<tr class="memdesc:a295b3680ef7725b7cd2bd9be5f9ec395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assignment. <br /></td></tr>
+<tr class="separator:a295b3680ef7725b7cd2bd9be5f9ec395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14209c78b7faaad1ae5937833265a966"><td class="memItemLeft" align="right" valign="top"><a id="a14209c78b7faaad1ae5937833265a966"></a>
 allocator_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classweak_1_1weak__hash__table__base.html#a14209c78b7faaad1ae5937833265a966">get_allocator</a> () const</td></tr>
 <tr class="memdesc:a14209c78b7faaad1ae5937833265a966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the allocator. <br /></td></tr>
@@ -836,7 +844,7 @@ template&lt;class... Args&gt; </div>
 
 <p>Given a bucket, which must be uninitialized emplaces the value in it and marks it used. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00683">683</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00699">699</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -867,7 +875,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>If weak pointers have expired, an empty hash table may appear non-empty. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00336">336</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00352">352</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -899,7 +907,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Erases the element if the given key, returning whether an element was actually erased. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00433">433</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00449">449</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -955,7 +963,7 @@ template&lt;class OnUninit , class OnInit , class OnFound &gt; </div>
 
 <p>Expects to call exactly one of the parameters <code>on_uninit</code>, <code>on_init</code>, and <code>on_found</code>, which will (re-)initialize the bucket with the given key. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00695">695</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00711">711</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -987,7 +995,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 <p>The current load factor. </p>
 <p>This over-approximates the proportion of used buckets. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00350">350</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00366">366</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -1020,7 +1028,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 <p>Sets the maximum load factor. </p>
 <p><em>PRECONDITION</em>: 0 &lt; <code>new_value</code> &lt; 1 </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00365">365</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00381">381</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +1059,7 @@ template&lt;class T, class Hash = std::hash&lt;typename weak_traits&lt;T&gt;::ke
 
 <p>Note that because pointers may expire without the table finding out, <a class="el" href="classweak_1_1weak__hash__table__base.html#a9eead69b6dd3f0bcca77a90f2aac1850" title="Note that because pointers may expire without the table finding out, size() is generally an overappro...">size()</a> is generally an overapproximation of the number of elements in the hash table. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00374">374</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__hash__table__base_8h_source.html#l00390">390</a> of file <a class="el" href="weak__hash__table__base_8h_source.html">weak_hash_table_base.h</a>.</p>
 
 </div>
 </div>

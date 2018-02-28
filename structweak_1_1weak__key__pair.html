@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>weak: weak::weak_key_pair&lt; Key, Value, KeyWeakPtr &gt; Struct Template Reference</title>
+<title>weak: weak::weak_key_pair&lt; T1, T2, WeakPtr1 &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ $(function() {
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structweak_1_1weak__key__pair-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">weak::weak_key_pair&lt; Key, Value, KeyWeakPtr &gt; Struct Template Reference</div>  </div>
+<div class="title">weak::weak_key_pair&lt; T1, T2, WeakPtr1 &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -83,99 +83,102 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a458c8d6bbafd6fdf9179a257c2fb3528"><td class="memItemLeft" align="right" valign="top"><a id="a458c8d6bbafd6fdf9179a257c2fb3528"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>key_type</b> = Key</td></tr>
-<tr class="separator:a458c8d6bbafd6fdf9179a257c2fb3528"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a723ad5e1bfef3bd7d81eadbc4c58a6ae"><td class="memItemLeft" align="right" valign="top"><a id="a723ad5e1bfef3bd7d81eadbc4c58a6ae"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = Value</td></tr>
-<tr class="separator:a723ad5e1bfef3bd7d81eadbc4c58a6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6dccbd8e662bcf14b0045b0c7cf542c"><td class="memItemLeft" align="right" valign="top"><a id="ad6dccbd8e662bcf14b0045b0c7cf542c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>key_pointer</b> = typename <a class="el" href="structweak_1_1weak__traits.html">weak_traits</a>&lt; KeyWeakPtr &gt;::strong_type</td></tr>
-<tr class="separator:ad6dccbd8e662bcf14b0045b0c7cf542c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1590757fb3107861c8e772a7c0e55bfc"><td class="memItemLeft" align="right" valign="top"><a id="a1590757fb3107861c8e772a7c0e55bfc"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>key_weak_pointer</b> = KeyWeakPtr</td></tr>
-<tr class="separator:a1590757fb3107861c8e772a7c0e55bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1765a59b0cdfe3fe522db04fdcd18e3f"><td class="memItemLeft" align="right" valign="top"><a id="a1765a59b0cdfe3fe522db04fdcd18e3f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>strong_type</b> = std::pair&lt; key_pointer, value_type &gt;</td></tr>
-<tr class="separator:a1765a59b0cdfe3fe522db04fdcd18e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18de8c68d7220ee17f3b4c69dfc7fac8"><td class="memItemLeft" align="right" valign="top"><a id="a18de8c68d7220ee17f3b4c69dfc7fac8"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>view_type</b> = std::pair&lt; key_pointer, value_type &amp; &gt;</td></tr>
-<tr class="separator:a18de8c68d7220ee17f3b4c69dfc7fac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87b5df7ea79308a8327beb309d98df7d"><td class="memItemLeft" align="right" valign="top"><a id="a87b5df7ea79308a8327beb309d98df7d"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_type</b> = std::pair&lt; key_pointer, const value_type &amp; &gt;</td></tr>
-<tr class="separator:a87b5df7ea79308a8327beb309d98df7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1e3e8008a69afe1baa83df88005d725"><td class="memItemLeft" align="right" valign="top"><a id="aa1e3e8008a69afe1baa83df88005d725"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>first_type</b> = T1</td></tr>
+<tr class="separator:aa1e3e8008a69afe1baa83df88005d725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adef27740dce17cf4fdb4d724bcb54bc3"><td class="memItemLeft" align="right" valign="top"><a id="adef27740dce17cf4fdb4d724bcb54bc3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>second_type</b> = T2</td></tr>
+<tr class="separator:adef27740dce17cf4fdb4d724bcb54bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12cbb7a413e54c706b2eb6f9f8fb2fb6"><td class="memItemLeft" align="right" valign="top"><a id="a12cbb7a413e54c706b2eb6f9f8fb2fb6"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>first_pointer</b> = typename <a class="el" href="structweak_1_1weak__traits.html">weak_traits</a>&lt; WeakPtr1 &gt;::strong_type</td></tr>
+<tr class="separator:a12cbb7a413e54c706b2eb6f9f8fb2fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f120c973369cbe76e98e4feebf186f"><td class="memItemLeft" align="right" valign="top"><a id="a84f120c973369cbe76e98e4feebf186f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>first_weak_pointer</b> = WeakPtr1</td></tr>
+<tr class="separator:a84f120c973369cbe76e98e4feebf186f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a28d3e0e05f5490df9ca8c9b7ea2164"><td class="memItemLeft" align="right" valign="top"><a id="a8a28d3e0e05f5490df9ca8c9b7ea2164"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>key_type</b> = const first_type</td></tr>
+<tr class="separator:a8a28d3e0e05f5490df9ca8c9b7ea2164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c0aa8d338bfcbd9a9f8941adf2894fc"><td class="memItemLeft" align="right" valign="top"><a id="a4c0aa8d338bfcbd9a9f8941adf2894fc"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>strong_type</b> = std::pair&lt; first_pointer, second_type &gt;</td></tr>
+<tr class="separator:a4c0aa8d338bfcbd9a9f8941adf2894fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade80ed7a83f5111b8342f0bc3929e961"><td class="memItemLeft" align="right" valign="top"><a id="ade80ed7a83f5111b8342f0bc3929e961"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>view_type</b> = std::pair&lt; first_pointer, second_type &amp; &gt;</td></tr>
+<tr class="separator:ade80ed7a83f5111b8342f0bc3929e961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a563a35c528e5a1042fa9739df3f1bbfb"><td class="memItemLeft" align="right" valign="top"><a id="a563a35c528e5a1042fa9739df3f1bbfb"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_type</b> = std::pair&lt; first_pointer, const second_type &amp; &gt;</td></tr>
+<tr class="separator:a563a35c528e5a1042fa9739df3f1bbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a246ba8386f31375d3ebb0def9fc55d3a"><td class="memItemLeft" align="right" valign="top"><a id="a246ba8386f31375d3ebb0def9fc55d3a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a246ba8386f31375d3ebb0def9fc55d3a">weak_key_pair</a> (const strong_type &amp;strong)</td></tr>
-<tr class="memdesc:a246ba8386f31375d3ebb0def9fc55d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs or implicitly converts a weak pair from a strong pair. <br /></td></tr>
-<tr class="separator:a246ba8386f31375d3ebb0def9fc55d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f8152ab92aededb2f4e2c6c24e65703"><td class="memTemplParams" colspan="2"><a id="a8f8152ab92aededb2f4e2c6c24e65703"></a>
+<tr class="memitem:a5d59730841559c9bd6f18ee140a6dbe6"><td class="memItemLeft" align="right" valign="top"><a id="a5d59730841559c9bd6f18ee140a6dbe6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a5d59730841559c9bd6f18ee140a6dbe6">weak_key_pair</a> (const strong_type &amp;strong)</td></tr>
+<tr class="memdesc:a5d59730841559c9bd6f18ee140a6dbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs or implicitly converts a weak pair from a strong pair. <br /></td></tr>
+<tr class="separator:a5d59730841559c9bd6f18ee140a6dbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674508e9f699fa91e1b8ef4aa818e41a"><td class="memTemplParams" colspan="2"><a id="a674508e9f699fa91e1b8ef4aa818e41a"></a>
 template&lt;class K , class V &gt; </td></tr>
-<tr class="memitem:a8f8152ab92aededb2f4e2c6c24e65703"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a8f8152ab92aededb2f4e2c6c24e65703">weak_key_pair</a> (K &amp;&amp;<a class="el" href="structweak_1_1weak__key__pair.html#a16fc12765e04774acc9ab178955333b3">key</a>, V &amp;&amp;value)</td></tr>
-<tr class="memdesc:a8f8152ab92aededb2f4e2c6c24e65703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a weak pair from the given key and value. <br /></td></tr>
-<tr class="separator:a8f8152ab92aededb2f4e2c6c24e65703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe61fa37fc2b08d61d0988edc51c19ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#afe61fa37fc2b08d61d0988edc51c19ad">expired</a> () const</td></tr>
-<tr class="memdesc:afe61fa37fc2b08d61d0988edc51c19ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this weak pair expired?  <a href="#afe61fa37fc2b08d61d0988edc51c19ad">More...</a><br /></td></tr>
-<tr class="separator:afe61fa37fc2b08d61d0988edc51c19ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30c6b6a8ef6f21c641be3a8758fddae9"><td class="memItemLeft" align="right" valign="top"><a id="a30c6b6a8ef6f21c641be3a8758fddae9"></a>
-view_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a30c6b6a8ef6f21c641be3a8758fddae9">lock</a> ()</td></tr>
-<tr class="memdesc:a30c6b6a8ef6f21c641be3a8758fddae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks weak pair, producing a view that holds a strong pointer. <br /></td></tr>
-<tr class="separator:a30c6b6a8ef6f21c641be3a8758fddae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94761bf18577d5a2f20c65e03d443c4d"><td class="memItemLeft" align="right" valign="top"><a id="a94761bf18577d5a2f20c65e03d443c4d"></a>
-const_view_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a94761bf18577d5a2f20c65e03d443c4d">lock</a> () const</td></tr>
-<tr class="memdesc:a94761bf18577d5a2f20c65e03d443c4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks weak pair, producing a view that holds a strong pointer. <br /></td></tr>
-<tr class="separator:a94761bf18577d5a2f20c65e03d443c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674508e9f699fa91e1b8ef4aa818e41a"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a674508e9f699fa91e1b8ef4aa818e41a">weak_key_pair</a> (K &amp;&amp;<a class="el" href="structweak_1_1weak__key__pair.html#ad9d1b682d6ca914d30cb7b8c58076ea1">key</a>, V &amp;&amp;value)</td></tr>
+<tr class="memdesc:a674508e9f699fa91e1b8ef4aa818e41a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a weak pair from the given key and value. <br /></td></tr>
+<tr class="separator:a674508e9f699fa91e1b8ef4aa818e41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04662a0b551d21d6a466c402dfec19bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a04662a0b551d21d6a466c402dfec19bd">expired</a> () const</td></tr>
+<tr class="memdesc:a04662a0b551d21d6a466c402dfec19bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this weak pair expired?  <a href="#a04662a0b551d21d6a466c402dfec19bd">More...</a><br /></td></tr>
+<tr class="separator:a04662a0b551d21d6a466c402dfec19bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914f45936bf8c691647ab68e3e57891e"><td class="memItemLeft" align="right" valign="top"><a id="a914f45936bf8c691647ab68e3e57891e"></a>
+view_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a914f45936bf8c691647ab68e3e57891e">lock</a> ()</td></tr>
+<tr class="memdesc:a914f45936bf8c691647ab68e3e57891e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks weak pair, producing a view that holds a strong pointer. <br /></td></tr>
+<tr class="separator:a914f45936bf8c691647ab68e3e57891e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad930644a258100895153c469f027e9de"><td class="memItemLeft" align="right" valign="top"><a id="ad930644a258100895153c469f027e9de"></a>
+const_view_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#ad930644a258100895153c469f027e9de">lock</a> () const</td></tr>
+<tr class="memdesc:ad930644a258100895153c469f027e9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks weak pair, producing a view that holds a strong pointer. <br /></td></tr>
+<tr class="separator:ad930644a258100895153c469f027e9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a16fc12765e04774acc9ab178955333b3"><td class="memItemLeft" align="right" valign="top"><a id="a16fc12765e04774acc9ab178955333b3"></a>
-static const key_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a16fc12765e04774acc9ab178955333b3">key</a> (const view_type &amp;view)</td></tr>
-<tr class="memdesc:a16fc12765e04774acc9ab178955333b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the key from a view pair. <br /></td></tr>
-<tr class="separator:a16fc12765e04774acc9ab178955333b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef58aa76a1425c7110c12204768f4626"><td class="memItemLeft" align="right" valign="top"><a id="aef58aa76a1425c7110c12204768f4626"></a>
-static const key_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#aef58aa76a1425c7110c12204768f4626">key</a> (const strong_type &amp;strong)</td></tr>
-<tr class="memdesc:aef58aa76a1425c7110c12204768f4626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the key from a strong pair. <br /></td></tr>
-<tr class="separator:aef58aa76a1425c7110c12204768f4626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cc3d72f53d767646e11f2830a22c8a8"><td class="memItemLeft" align="right" valign="top"><a id="a6cc3d72f53d767646e11f2830a22c8a8"></a>
-static strong_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a6cc3d72f53d767646e11f2830a22c8a8">move</a> (view_type &amp;view)</td></tr>
-<tr class="memdesc:a6cc3d72f53d767646e11f2830a22c8a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves from a view pair, producing a strong pair. <br /></td></tr>
-<tr class="separator:a6cc3d72f53d767646e11f2830a22c8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9d1b682d6ca914d30cb7b8c58076ea1"><td class="memItemLeft" align="right" valign="top"><a id="ad9d1b682d6ca914d30cb7b8c58076ea1"></a>
+static const first_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#ad9d1b682d6ca914d30cb7b8c58076ea1">key</a> (const view_type &amp;view)</td></tr>
+<tr class="memdesc:ad9d1b682d6ca914d30cb7b8c58076ea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the key from a view pair. <br /></td></tr>
+<tr class="separator:ad9d1b682d6ca914d30cb7b8c58076ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23b0e8c4e02f5ffee0300cdb2170fe8"><td class="memItemLeft" align="right" valign="top"><a id="aa23b0e8c4e02f5ffee0300cdb2170fe8"></a>
+static const first_type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#aa23b0e8c4e02f5ffee0300cdb2170fe8">key</a> (const strong_type &amp;strong)</td></tr>
+<tr class="memdesc:aa23b0e8c4e02f5ffee0300cdb2170fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the key from a strong pair. <br /></td></tr>
+<tr class="separator:aa23b0e8c4e02f5ffee0300cdb2170fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98ba82a5840e94d45563da057e34fafd"><td class="memItemLeft" align="right" valign="top"><a id="a98ba82a5840e94d45563da057e34fafd"></a>
+static strong_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a98ba82a5840e94d45563da057e34fafd">move</a> (view_type &amp;view)</td></tr>
+<tr class="memdesc:a98ba82a5840e94d45563da057e34fafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves from a view pair, producing a strong pair. <br /></td></tr>
+<tr class="separator:a98ba82a5840e94d45563da057e34fafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a2c3c4173860896a62867a8a4e0402b4f"><td class="memItemLeft" align="right" valign="top"><a id="a2c3c4173860896a62867a8a4e0402b4f"></a>
-key_weak_pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#a2c3c4173860896a62867a8a4e0402b4f">first</a></td></tr>
-<tr class="memdesc:a2c3c4173860896a62867a8a4e0402b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The first component. <br /></td></tr>
-<tr class="separator:a2c3c4173860896a62867a8a4e0402b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1c5622e6f1cdf0d75a4ffd9a455a915"><td class="memItemLeft" align="right" valign="top"><a id="aa1c5622e6f1cdf0d75a4ffd9a455a915"></a>
-value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#aa1c5622e6f1cdf0d75a4ffd9a455a915">second</a></td></tr>
-<tr class="memdesc:aa1c5622e6f1cdf0d75a4ffd9a455a915"><td class="mdescLeft">&#160;</td><td class="mdescRight">The second component. <br /></td></tr>
-<tr class="separator:aa1c5622e6f1cdf0d75a4ffd9a455a915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6541322953f0da1304b461b6f148163"><td class="memItemLeft" align="right" valign="top"><a id="af6541322953f0da1304b461b6f148163"></a>
+first_weak_pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#af6541322953f0da1304b461b6f148163">first</a></td></tr>
+<tr class="memdesc:af6541322953f0da1304b461b6f148163"><td class="mdescLeft">&#160;</td><td class="mdescRight">The first component. <br /></td></tr>
+<tr class="separator:af6541322953f0da1304b461b6f148163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade1dfdbce3712950541af84c1b9af853"><td class="memItemLeft" align="right" valign="top"><a id="ade1dfdbce3712950541af84c1b9af853"></a>
+second_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structweak_1_1weak__key__pair.html#ade1dfdbce3712950541af84c1b9af853">second</a></td></tr>
+<tr class="memdesc:ade1dfdbce3712950541af84c1b9af853"><td class="mdescLeft">&#160;</td><td class="mdescRight">The second component. <br /></td></tr>
+<tr class="separator:ade1dfdbce3712950541af84c1b9af853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class Key, class Value, class KeyWeakPtr = std::weak_ptr&lt;const Key&gt;&gt;<br />
-struct weak::weak_key_pair&lt; Key, Value, KeyWeakPtr &gt;</h3>
+<div class="textblock"><h3>template&lt;class T1, class T2, class WeakPtr1 = std::weak_ptr&lt;const T1&gt;&gt;<br />
+struct weak::weak_key_pair&lt; T1, T2, WeakPtr1 &gt;</h3>
 
 <p>A pair whose first component is a weak pointer. </p>
 <p>The second element is owned directly. </p>
 
 <p class="definition">Definition at line <a class="el" href="weak__key__pair_8h_source.html#l00012">12</a> of file <a class="el" href="weak__key__pair_8h_source.html">weak_key_pair.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="afe61fa37fc2b08d61d0988edc51c19ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe61fa37fc2b08d61d0988edc51c19ad">&#9670;&nbsp;</a></span>expired()</h2>
+<a id="a04662a0b551d21d6a466c402dfec19bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04662a0b551d21d6a466c402dfec19bd">&#9670;&nbsp;</a></span>expired()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class Key , class Value , class KeyWeakPtr  = std::weak_ptr&lt;const Key&gt;&gt; </div>
+template&lt;class T1 , class T2 , class WeakPtr1  = std::weak_ptr&lt;const T1&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structweak_1_1weak__key__pair.html">weak::weak_key_pair</a>&lt; Key, Value, KeyWeakPtr &gt;::expired </td>
+          <td class="memname">bool <a class="el" href="structweak_1_1weak__key__pair.html">weak::weak_key_pair</a>&lt; T1, T2, WeakPtr1 &gt;::expired </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -191,7 +194,7 @@ template&lt;class Key , class Value , class KeyWeakPtr  = std::weak_ptr&lt;const
 <p>Is this weak pair expired? </p>
 <p>A weak key pair is expired if the first component is expired. </p>
 
-<p class="definition">Definition at line <a class="el" href="weak__key__pair_8h_source.html#l00041">41</a> of file <a class="el" href="weak__key__pair_8h_source.html">weak_key_pair.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="weak__key__pair_8h_source.html#l00042">42</a> of file <a class="el" href="weak__key__pair_8h_source.html">weak_key_pair.h</a>.</p>
 
 </div>
 </div>
