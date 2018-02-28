@@ -747,7 +747,8 @@ private:
         }
     }
 
-    size_t hash_(const key_type& key) const
+    template <class KeyLike>
+    size_t hash_(const KeyLike& key) const
     {
         return hasher_(key) & hash_code_mask_;
     }
