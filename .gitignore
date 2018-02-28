@@ -4,3 +4,6 @@ cmake-build-*/
 
 # CLion
 .idea/
+
+# Doxygen
+doc/
