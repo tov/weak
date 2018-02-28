@@ -313,6 +313,22 @@ public:
         clear();
     }
 
+    /// Copy-assignment.
+    weak_hash_table_base& operator=(const weak_hash_table_base& other)
+    {
+        clear();
+        insert(other.begin(), other.end());
+        return *this;
+    }
+
+    /// Move-assignment.
+    weak_hash_table_base& operator=(weak_hash_table_base&& other)
+    {
+        clear();
+        swap(other);
+        return *this;
+    }
+
     /// Returns the allocator.
     allocator_type get_allocator() const
     {
