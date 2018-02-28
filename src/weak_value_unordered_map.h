@@ -12,16 +12,16 @@ namespace weak {
 ///
 /// When a pointer to a range value expires, that association of the map is
 /// lazily removed.
-template<class Key, class Value,
+template<class Key, class T,
          class Hash = std::hash<Key>,
          class KeyEqual = std::equal_to<>,
-         class Allocator = std::allocator<weak_value_pair<Key, Value>>
+         class Allocator = std::allocator<weak_value_pair<Key, T>>
 >
 class weak_value_unordered_map
-        : public weak_hash_table_base<weak_value_pair<Key, Value>,
+        : public weak_hash_table_base<weak_value_pair<Key, T>,
                                                  Hash, KeyEqual, Allocator>
 {
-    using BaseClass = weak_hash_table_base<weak_value_pair<Key, Value>,
+    using BaseClass = weak_hash_table_base<weak_value_pair<Key, T>,
                                                       Hash, KeyEqual, Allocator>;
     using Bucket = typename BaseClass::Bucket;
 public:
@@ -44,32 +44,32 @@ public:
         proxy& operator=(proxy&&) = delete;
 
         /// Dereferencing the proxy acts like dereferencing the `shared_ptr`.
-        Value& operator*() const noexcept
+        T& operator*() const noexcept
         {
             return *value_ptr_;
         }
 
         /// The proxy stands for a `shared_ptr`.
-        std::shared_ptr<Value> operator->() const noexcept
+        std::shared_ptr<T> operator->() const noexcept
         {
             return value_ptr_;
         }
 
         /// The proxy is coercible to a `shared_ptr`.
-        operator std::shared_ptr<Value>() const noexcept
+        operator std::shared_ptr<T>() const noexcept
         {
             return value_ptr_;
         }
 
         /// Assigning a `shared_ptr` to the proxy assigns into the map.
-        proxy& operator=(const std::shared_ptr<Value>& value)
+        proxy& operator=(const std::shared_ptr<T>& value)
         {
             bucket_.value().second = value_ptr_ = value;
             return *this;
         }
 
         /// Assigning a `shared_ptr` to the proxy assigns into the map.
-        proxy& operator=(std::shared_ptr<Value>&& value)
+        proxy& operator=(std::shared_ptr<T>&& value)
         {
             bucket_.value().second = value_ptr_ = std::move(value);
             return *this;
@@ -82,7 +82,7 @@ public:
         { }
 
         Bucket& bucket_;
-        std::shared_ptr<Value> value_ptr_;
+        std::shared_ptr<T> value_ptr_;
 
         friend class weak_value_unordered_map;
     };
@@ -101,12 +101,12 @@ public:
                 key,
                 [&](Bucket& bucket) {
                     BaseClass::construct_bucket_(bucket, key,
-                                                 std::shared_ptr<Value>{});
+                                                 std::shared_ptr<T>{});
                     result_bucket = &bucket;
                 },
                 [&](Bucket& bucket) {
                     bucket.value().first = key;
-                    bucket.value().second = std::shared_ptr<Value>{};
+                    bucket.value().second = std::shared_ptr<T>{};
                     result_bucket = &bucket;
                 },
                 [&](Bucket& bucket) {
@@ -118,9 +118,9 @@ public:
 };
 
 /// Swaps two `weak_value_unordered_map`s in constant time.
-template<class Key, class Value, class Hash, class KeyEqual, class Allocator>
-void swap(weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-          weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
+template<class Key, class T, class Hash, class KeyEqual, class Allocator>
+void swap(weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& a,
+          weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& b)
 {
     a.swap(b);
 }
@@ -130,12 +130,12 @@ void swap(weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
 /// That is, are all the keys of `a` keys of `b`, and all the values equal
 /// according to `compare`. Function `compare` defaults to equality, but
 /// other relations are possible.
-template <class Key, class Value, class Hash, class KeyEqual, class Allocator,
-          class ValueEqual = std::equal_to<Value>>
+template <class Key, class T, class Hash, class KeyEqual, class Allocator,
+          class TEqual = std::equal_to<>>
 bool submap(
-        const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-        const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b,
-        ValueEqual compare = std::equal_to<Value>())
+        const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& a,
+        const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& b,
+        TEqual compare = TEqual())
 {
     for (const auto& elem : a) {
         auto iter = b.find(elem.first);
@@ -147,26 +147,26 @@ bool submap(
 }
 
 /// Are the keys of `a` a subset of the keys of `b`?
-template <class Key, class Value, class Hash, class KeyEqual, class Allocator>
+template <class Key, class T, class Hash, class KeyEqual, class Allocator>
 bool keys_subset(
-        const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-        const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
+        const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& a,
+        const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& b)
 {
     submap(a, b, [](const auto&, const auto&) { return true; });
 }
 
 /// Are the given maps equal?
-template <class Key, class Value, class Hash, class KeyEqual, class Allocator>
-bool operator==(const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-                const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
+template <class Key, class T, class Hash, class KeyEqual, class Allocator>
+bool operator==(const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& a,
+                const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& b)
 {
     return submap(a, b) && keys_subset(b, a);
 }
 
 /// Are the given maps unequal?
-template <class Key, class Value, class Hash, class KeyEqual, class Allocator>
-bool operator!=(const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& a,
-                const weak_value_unordered_map<Key, Value, Hash, KeyEqual, Allocator>& b)
+template <class Key, class T, class Hash, class KeyEqual, class Allocator>
+bool operator!=(const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& a,
+                const weak_value_unordered_map<Key, T, Hash, KeyEqual, Allocator>& b)
 {
     return !(a == b);
 }

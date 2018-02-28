@@ -7,22 +7,23 @@ namespace weak {
 /// A pair whose first component is a weak pointer.
 ///
 /// The second element is owned directly.
-template <class Key, class Value,
-          class KeyWeakPtr = std::weak_ptr<const Key>>
+template <class T1, class T2,
+          class WeakPtr1 = std::weak_ptr<const T1>>
 struct weak_key_pair
 {
-    using key_type = Key;
-    using value_type = Value;
-    using key_pointer = typename weak_traits<KeyWeakPtr>::strong_type;
-    using key_weak_pointer = KeyWeakPtr;
-    using strong_type = std::pair<key_pointer, value_type>;
-    using view_type = std::pair<key_pointer, value_type&>;
-    using const_view_type = std::pair<key_pointer, const value_type&>;
+    using first_type = T1;
+    using second_type = T2;
+    using first_pointer = typename weak_traits<WeakPtr1>::strong_type;
+    using first_weak_pointer = WeakPtr1;
+    using key_type = const first_type;
+    using strong_type = std::pair<first_pointer, second_type>;
+    using view_type = std::pair<first_pointer, second_type&>;
+    using const_view_type = std::pair<first_pointer, const second_type&>;
 
     /// The first component.
-    key_weak_pointer first;
+    first_weak_pointer first;
     /// The second component.
-    value_type second;
+    second_type second;
 
     /// Constructs or implicitly converts a weak pair from a strong pair.
     weak_key_pair(const strong_type& strong)
@@ -56,13 +57,13 @@ struct weak_key_pair
     }
 
     /// Gets a pointer to the key from a view pair.
-    static const key_type* key(const view_type& view)
+    static const first_type* key(const view_type& view)
     {
         return view.first.get();
     }
 
     /// Gets a pointer to the key from a strong pair.
-    static const key_type* key(const strong_type& strong)
+    static const first_type* key(const strong_type& strong)
     {
         return strong.first.get();
     }
