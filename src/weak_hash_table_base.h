@@ -10,7 +10,7 @@
 #include <limits>
 #include <memory>
 
-namespace weak::detail {
+namespace weak {
 
 /// A weak Robin Hood hash table.
 template <
@@ -843,5 +843,5 @@ void swap(weak_hash_table_base<T, Hash, KeyEqual, Allocator>& a,
     a.swap(b);
 }
 
-} // end namespace weak::detail
+} // end namespace weak
 

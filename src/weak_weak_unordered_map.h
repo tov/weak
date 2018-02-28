@@ -1,7 +1,6 @@
 #pragma once
 
-#include "detail/weak_hash_table_base.h"
-#include "detail/weak_unordered_map_base.h"
+#include "weak_hash_table_base.h"
 #include "weak_traits.h"
 #include "weak_weak_pair.h"
 
@@ -15,15 +14,14 @@ template<
         class KeyEqual = std::equal_to<Key>,
         class Allocator = std::allocator<weak_weak_pair<Key, Value>>>
 class weak_weak_unordered_map
-        : public detail::weak_unordered_map_base<weak_weak_pair<Key, Value>,
-                                                 Hash, KeyEqual, Allocator>
+        : public weak_hash_table_base<weak_weak_pair<Key, Value>,
+                                              Hash, KeyEqual, Allocator>
 {
-    using BaseClass = detail::weak_unordered_map_base<weak_weak_pair<Key, Value>,
-                                                      Hash, KeyEqual,
-                                                      Allocator>;
+    using BaseClass = weak_hash_table_base<weak_weak_pair<Key, Value>,
+                                                   Hash, KeyEqual, Allocator>;
     using Bucket = typename BaseClass::Bucket;
 public:
-    using BaseClass::weak_unordered_map_base;
+    using BaseClass::weak_hash_table_base;
 
     class proxy
     {

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "detail/weak_hash_table_base.h"
+#include "weak_hash_table_base.h"
 #include "weak_traits.h"
 
+/// Namespace for weak pairs and hash tables.
 namespace weak {
 
 template <
@@ -12,10 +13,10 @@ template <
     class Allocator = std::allocator<Key>
 >
 class weak_unordered_set :
-    public detail::weak_hash_table_base<std::weak_ptr<const Key>,
+    public weak_hash_table_base<std::weak_ptr<const Key>,
                                         Hash, KeyEqual, Allocator>
 {
-    using BaseClass = detail::weak_hash_table_base<std::weak_ptr<const Key>,
+    using BaseClass = weak_hash_table_base<std::weak_ptr<const Key>,
                                                    Hash, KeyEqual, Allocator>;
 public:
     using BaseClass::weak_hash_table_base;
