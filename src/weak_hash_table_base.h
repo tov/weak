@@ -843,14 +843,9 @@ private:
         }
     }
 
-    size_t add_bucket_(size_t bucket, ssize_t offset) const
-    {
-        return (bucket + offset) % bucket_count();
-    }
-
     size_t next_bucket_(size_t pos) const
     {
-        return add_bucket_(pos, 1);
+        return (pos + 1) % bucket_count();
     }
 
     size_t probe_distance_(size_t actual, size_t preferred) const
