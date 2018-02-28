@@ -100,7 +100,7 @@ private:
     // We're going to steal a bit from the hash codes to store a used bit..
     // So the number of hash bits is one less than the number of bits in size_t.
     static constexpr size_t number_of_hash_bits_ =
-            sizeof(size_t) * CHAR_BIT - 1;
+            sizeof(size_t) * CHAR_BIT - 2;
 
     static constexpr size_t hash_code_mask_ =
             (size_t(1) << number_of_hash_bits_) - 1;
@@ -132,7 +132,12 @@ protected:
     private:
         weak_value_type value_;
         size_t          used_      : 1,
+                        tombstone_ : 1,
                         hash_code_ : number_of_hash_bits_;
+        // INVARIANT:
+        //   - !(used_ && tombstone_)
+        //   - if used_ then value_ and hash_code_ are initialized, otherwie
+        //     not
 
         bool occupied_() const
         {
@@ -397,7 +402,7 @@ public:
     {
         for (auto& bucket : buckets_) {
             if (bucket.used_) {
-                destroy_bucket_(bucket);
+                destroy_bucket_(bucket, 0);
             }
         }
 
@@ -409,7 +414,7 @@ public:
     {
         for (auto& bucket : buckets_) {
             if (bucket.used_ && bucket.value_.expired()) {
-                destroy_bucket_(bucket);
+                destroy_bucket_(bucket, 1);
                 --size_;
             }
         }
@@ -449,8 +454,7 @@ public:
     bool erase(const key_type& key)
     {
         if (Bucket* bucket = lookup_(key)) {
-            // TODO: This is wrong. Need a tombstone!
-            destroy_bucket_(*bucket);
+            destroy_bucket_(*bucket, 1);
             --size_;
             return true;
         } else {
@@ -604,17 +608,22 @@ private:
 
         for (;;) {
             const Bucket& bucket = buckets_[pos];
-            if (!bucket.used_)
-                return nullptr;
 
-            if (dist > probe_distance_(pos, which_bucket_(bucket.hash_code_)))
-                return nullptr;
+            if (!bucket.tombstone_) {
+                if (!bucket.used_)
+                    return nullptr;
 
-            if (hash_code == bucket.hash_code_) {
-                auto bucket_value_locked = bucket.value_.lock();
-                if (const auto* bucket_key = weak_trait::key(bucket_value_locked))
-                    if (equal_(key, *bucket_key))
-                        return &bucket;
+                if (dist >
+                        probe_distance_(pos, which_bucket_(bucket.hash_code_)))
+                    return nullptr;
+
+                if (hash_code == bucket.hash_code_) {
+                    auto bucket_value_locked = bucket.value_.lock();
+                    if (const auto* bucket_key =
+                            weak_trait::key(bucket_value_locked))
+                        if (equal_(key, *bucket_key))
+                            return &bucket;
+                }
             }
 
             pos = next_bucket_(pos);
@@ -638,7 +647,7 @@ private:
         for (;;) {
             Bucket& bucket = buckets_[pos];
 
-            if (!bucket.used_) {
+            if (!bucket.used_ || bucket.tombstone_) {
                 construct_bucket_(bucket, std::move(value));
                 bucket.hash_code_ = hash_code;
                 return;
@@ -704,6 +713,7 @@ protected:
                 &bucket.value_,
                 std::forward<Args>(args)...);
         bucket.used_ = 1;
+        bucket.tombstone_ = 0;
     }
 
     /// Expects to call exactly one of the parameters `on_uninit`, `on_init`,
@@ -733,7 +743,7 @@ private:
         for (;;) {
             Bucket& bucket = buckets_[pos];
 
-            if (!bucket.used_) {
+            if (!bucket.used_ || bucket.tombstone_) {
                 on_uninit(bucket);
                 bucket.hash_code_ = hash_code;
                 ++size_;
@@ -776,18 +786,21 @@ private:
         return hasher_(key) & hash_code_mask_;
     }
 
-    void destroy_bucket_(Bucket& bucket)
+    void destroy_bucket_(Bucket& bucket, size_t tombstone = 0)
     {
         std::allocator_traits<weak_value_allocator_type>::destroy(
                 weak_value_allocator_,
                 &bucket.value_);
         bucket.used_ = 0;
+        bucket.tombstone_ = tombstone;
     }
 
     void init_buckets_()
     {
-        for (auto& bucket : buckets_)
+        for (auto& bucket : buckets_) {
             bucket.used_ = 0;
+            bucket.tombstone_ = 0;
+        }
     }
 
     size_t next_bucket_(size_t pos) const

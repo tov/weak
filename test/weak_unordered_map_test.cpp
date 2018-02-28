@@ -23,9 +23,10 @@ TEST_CASE("weak_key_unordered_map")
 
     hello = make_shared<string>("hello");
     map[hello] = 5;
+    CHECK( map.find("hello") != map.end() );
     CHECK( map[hello] == 5 );
 
-    CHECK( map == map );
+//    CHECK( map == map );
 }
 
 TEST_CASE("weak_value_unordered_map")
