@@ -9,6 +9,7 @@
 #include <iterator>
 #include <limits>
 #include <memory>
+#include <optional>
 
 namespace weak {
 
@@ -454,8 +455,8 @@ public:
     /// element was actually erased.
     bool erase(const key_type& key)
     {
-        if (Bucket* bucket = lookup_(key)) {
-            destroy_bucket_(*bucket, 1);
+        if (auto bucket_index = lookup_(key)) {
+            destroy_bucket_(buckets_[*bucket_index], 1);
             --size_;
             return true;
         } else {
@@ -480,7 +481,7 @@ public:
     template <class KeyLike>
     bool member(const KeyLike& key) const
     {
-        return lookup_(key) != nullptr;
+        return lookup_(key) != std::nullopt;
     }
 
     /// Counts the number of times the `key` appears (0 or 1).
@@ -497,34 +498,26 @@ public:
     template <class KeyLike>
     iterator find(const KeyLike& key)
     {
-        if (auto bucket = lookup_(key)) {
-            return {bucket, buckets_.end()};
-        } else {
-            return end();
-        }
+        return make_iterator_(lookup_(key));
     }
 
     /// Returns an iterator to the given key, or `this->end()` if not found.
     template <class KeyLike>
     const_iterator find(const KeyLike& key) const
     {
-        if (auto bucket = lookup_(key)) {
-            return {bucket, buckets_.cend()};
-        } else {
-            return cend();
-        }
+        return make_iterator_(lookup_(key));
     }
 
     /// Returns an iterator to the beginning of the hash table.
     iterator begin()
     {
-        return {buckets_.begin(), buckets_.end()};
+        return make_iterator_({0});
     }
 
     /// Returns an iterator past the end of the hash table.
     iterator end()
     {
-        return {buckets_.end(), buckets_.end()};
+        return make_iterator_(std::nullopt);
     }
 
     /// Returns a constant iterator to the beginning of the hash table.
@@ -542,13 +535,26 @@ public:
     /// Returns a constant iterator to the beginning of the hash table.
     const_iterator cbegin() const
     {
-        return {buckets_.begin(), buckets_.end()};
+        return make_iterator_({0});
     }
 
     /// Returns a constant iterator past the end of the hash table.
     const_iterator cend() const
     {
-        return {buckets_.end(), buckets_.end()};
+        return make_iterator_(std::nullopt);
+    }
+
+private:
+    iterator make_iterator_(std::optional<size_t> bucket_index)
+    {
+        return {bucket_index? &buckets_[*bucket_index] : buckets_.end(),
+                buckets_.end()};
+    }
+
+    const_iterator make_iterator_(std::optional<size_t> bucket_index) const
+    {
+        return {bucket_index? &buckets_[*bucket_index] : buckets_.end(),
+                buckets_.end()};
     }
 
 private:
@@ -601,7 +607,7 @@ private:
     }
 
     template <class KeyLike>
-    const Bucket* lookup_(const KeyLike& key) const
+    std::optional<size_t> lookup_(const KeyLike& key) const
     {
         size_t hash_code = hash_(key);
         size_t pos = which_bucket_(hash_code);
@@ -613,31 +619,23 @@ private:
             if (bucket.tombstone_ || bucket.used_) {
                 if (dist >
                     probe_distance_(pos, which_bucket_(bucket.hash_code_)))
-                    return nullptr;
+                    return std::nullopt;
             }
 
             if (!bucket.used_)
-                return nullptr;
+                return std::nullopt;
 
             if (!bucket.tombstone_ && hash_code == bucket.hash_code_) {
                 auto bucket_value_locked = bucket.value_.lock();
                 if (const auto* bucket_key =
                         weak_trait::key(bucket_value_locked))
                     if (equal_(key, *bucket_key))
-                        return &bucket;
+                        return {pos};
             }
 
             pos = next_bucket_(pos);
             ++dist;
         }
-    }
-
-    template <class KeyLike>
-    Bucket* lookup_(const KeyLike& key)
-    {
-        auto const_this = const_cast<const weak_hash_table_base*>(this);
-        auto bucket = const_this->lookup_(key);
-        return const_cast<Bucket*>(bucket);
     }
 
     /// Places `value` in the table, starting at `pos` and moving forward.
