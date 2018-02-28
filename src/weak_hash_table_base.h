@@ -297,7 +297,7 @@ public:
                                    key_equal(), allocator)
     { }
 
-    /// Constructs from an initializer list of values, with the given
+    /// Construct from an initializer list of values, with the given
     /// bucket count, hasher, and allocator.
     weak_hash_table_base(std::initializer_list<strong_value_type> elements,
                          size_t bucket_count,
@@ -449,6 +449,7 @@ public:
     bool erase(const key_type& key)
     {
         if (Bucket* bucket = lookup_(key)) {
+            // TODO: This is wrong. Need a tombstone!
             destroy_bucket_(*bucket);
             --size_;
             return true;
