@@ -16,7 +16,7 @@ namespace weak {
 ///
 /// ## Get It
 ///
-/// The latest version is available [on GitHub](https://github.com/tov/weak).
+/// The latest version is available [on GitHub](https://github.com/tov/weakpp).
 ///
 /// ## Use It
 /// This library provides four forms of weak hash tables:
