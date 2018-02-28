@@ -12,6 +12,42 @@
 
 namespace weak {
 
+/// \mainpage weak: weak hash tables for C++
+///
+/// ## Get It
+///
+/// The latest version is available [on GitHub](https://github.com/tov/weak).
+///
+/// ## Use It
+/// This library provides four forms of weak hash tables:
+///
+///   - `weak_unordered_set`, which stores a set of `std::weak_ptr`s.
+///
+///   - `weak_key_unordered_map`, which maps `std::weak_ptr`s to values.
+///
+///   - `weak_value_unordered_map`, which maps keys to `std::weak_ptr`s.
+///
+///   - `weak_weak_unordered_map`, which maps `std::weak_ptr`s to
+///     `std::weak_ptr`s.
+///
+/// Most of the interfaces of all four classes are common, and declared as part
+/// of a shared base class `weak_hash_table_base`. All the constructors may
+/// be found in that class as well.
+///
+/// Here is an example:
+///
+/// ```cpp
+/// weak_key_unordered_map<string, int> map;
+/// CHECK( !map.member("hello") );
+///
+/// auto hello = make_shared<string>("hello");
+/// map.insert({hello, 5});
+/// CHECK( map.member("hello") );
+///
+/// hello = nullptr;
+/// CHECK( !map.member("hello") );
+/// ```
+
 /// A weak Robin Hood hash table.
 ///
 /// Provides the common functionality for all the weak hash tables, including

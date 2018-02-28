@@ -11,6 +11,7 @@ using namespace std;
 TEST_CASE("weak_key_unordered_map")
 {
     weak_key_unordered_map<string, int> map;
+    CHECK( !map.member("hello") );
     CHECK( map.find("hello") == map.end() );
 
     auto hello = make_shared<string>("hello");

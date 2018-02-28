@@ -33,4 +33,8 @@ add_executable17(weak_hash_table_test
         src/weak_value_unordered_map.h
         src/weak_hash_table_base.h)
 
+add_executable17(intern_table_test
+        test/catch_main.cpp
+        test/intern_table_test.cpp
+        test/intern_table.cpp)
 
