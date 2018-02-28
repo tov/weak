@@ -49,9 +49,9 @@ namespace weak {
 /// ```
 ///
 /// For a more realistic example, see
-/// [`intern_table.h`](https://github.com/tov/weak/blob/master/test/intern_table.h)
+/// [`intern_table.h`](https://github.com/tov/weakpp/blob/master/test/intern_table.h)
 /// and
-/// [`intern_table.cpp`](https://github.com/tov/weak/blob/master/test/intern_table.cpp).
+/// [`intern_table.cpp`](https://github.com/tov/weakpp/blob/master/test/intern_table.cpp).
 ///
 
 /// A weak Robin Hood hash table.
