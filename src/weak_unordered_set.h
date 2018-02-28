@@ -28,5 +28,28 @@ void swap(weak_unordered_set<Key, Hash, KeyEqual, Allocator>& a,
     a.swap(b);
 }
 
+template <class Key, class Hash, class KeyEqual, class Allocator>
+bool subset(const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& a,
+            const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& b)
+{
+    for (const auto& elem : a)
+        if (!b.member(*elem)) return false;
+
+    return true;
+}
+
+template <class Key, class Hash, class KeyEqual, class Allocator>
+bool operator==(const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& a,
+                const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& b)
+{
+    return subset(a, b) && subset(b, a);
+}
+
+template <class Key, class Hash, class KeyEqual, class Allocator>
+bool operator!=(const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& a,
+                const weak_unordered_set<Key, Hash, KeyEqual, Allocator>& b)
+{
+    return !(a == b);
+}
 
 } // end namespace weak
