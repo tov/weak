@@ -115,30 +115,30 @@ template&lt;class T , class Hash , class KeyEqual , class Allocator &gt; </td></
 <tr class="memitem:ae48d7447bf6bc0eef72c8c404e9d549b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#ae48d7447bf6bc0eef72c8c404e9d549b">swap</a> (<a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a>&lt; T, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__hash__table__base.html">weak_hash_table_base</a>&lt; T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
 <tr class="memdesc:ae48d7447bf6bc0eef72c8c404e9d549b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of two weak hash tables in constant time. <br /></td></tr>
 <tr class="separator:ae48d7447bf6bc0eef72c8c404e9d549b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec28ca33ea281e73778ce9ef21195996"><td class="memTemplParams" colspan="2"><a id="aec28ca33ea281e73778ce9ef21195996"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:aec28ca33ea281e73778ce9ef21195996"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#aec28ca33ea281e73778ce9ef21195996">swap</a> (<a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:aec28ca33ea281e73778ce9ef21195996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__key__unordered__map.html" title="A map whose keys are stored by std::weak_ptrs. ">weak_key_unordered_map</a></code>s in constant time. <br /></td></tr>
-<tr class="separator:aec28ca33ea281e73778ce9ef21195996"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf6656216fe804d883d3c6a73abe1a39"><td class="memTemplParams" colspan="2">template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </td></tr>
-<tr class="memitem:acf6656216fe804d883d3c6a73abe1a39"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#acf6656216fe804d883d3c6a73abe1a39">submap</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b, ValueEqual compare=std::equal_to&lt; Value &gt;())</td></tr>
-<tr class="memdesc:acf6656216fe804d883d3c6a73abe1a39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#acf6656216fe804d883d3c6a73abe1a39">More...</a><br /></td></tr>
-<tr class="separator:acf6656216fe804d883d3c6a73abe1a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ff2a98e98166e7e2a7906434f312126"><td class="memTemplParams" colspan="2"><a id="a7ff2a98e98166e7e2a7906434f312126"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a7ff2a98e98166e7e2a7906434f312126"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a7ff2a98e98166e7e2a7906434f312126">keys_subset</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a7ff2a98e98166e7e2a7906434f312126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
-<tr class="separator:a7ff2a98e98166e7e2a7906434f312126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77eb0cb2a4f7d3992b6436d4a84d8ad4"><td class="memTemplParams" colspan="2"><a id="a77eb0cb2a4f7d3992b6436d4a84d8ad4"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a77eb0cb2a4f7d3992b6436d4a84d8ad4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a77eb0cb2a4f7d3992b6436d4a84d8ad4">operator==</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a77eb0cb2a4f7d3992b6436d4a84d8ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
-<tr class="separator:a77eb0cb2a4f7d3992b6436d4a84d8ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf628430b77a365f539b2951aa45e3f1"><td class="memTemplParams" colspan="2"><a id="adf628430b77a365f539b2951aa45e3f1"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:adf628430b77a365f539b2951aa45e3f1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#adf628430b77a365f539b2951aa45e3f1">operator!=</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:adf628430b77a365f539b2951aa45e3f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
-<tr class="separator:adf628430b77a365f539b2951aa45e3f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077ccfbf253089c454b94476ce96e50c"><td class="memTemplParams" colspan="2"><a id="a077ccfbf253089c454b94476ce96e50c"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a077ccfbf253089c454b94476ce96e50c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a077ccfbf253089c454b94476ce96e50c">swap</a> (<a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a077ccfbf253089c454b94476ce96e50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__key__unordered__map.html" title="A map whose keys are stored by std::weak_ptrs. ">weak_key_unordered_map</a></code>s in constant time. <br /></td></tr>
+<tr class="separator:a077ccfbf253089c454b94476ce96e50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a4b32759c453e1736e32c554e3c5f35"><td class="memTemplParams" colspan="2">template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </td></tr>
+<tr class="memitem:a3a4b32759c453e1736e32c554e3c5f35"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a3a4b32759c453e1736e32c554e3c5f35">submap</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b, TEqual compare=TEqual())</td></tr>
+<tr class="memdesc:a3a4b32759c453e1736e32c554e3c5f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#a3a4b32759c453e1736e32c554e3c5f35">More...</a><br /></td></tr>
+<tr class="separator:a3a4b32759c453e1736e32c554e3c5f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3a285061dbfc160fde8d4d156de02c7"><td class="memTemplParams" colspan="2"><a id="aa3a285061dbfc160fde8d4d156de02c7"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:aa3a285061dbfc160fde8d4d156de02c7"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#aa3a285061dbfc160fde8d4d156de02c7">keys_subset</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:aa3a285061dbfc160fde8d4d156de02c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
+<tr class="separator:aa3a285061dbfc160fde8d4d156de02c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a9ba42837b800337b382ae5212f5f2"><td class="memTemplParams" colspan="2"><a id="a02a9ba42837b800337b382ae5212f5f2"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a02a9ba42837b800337b382ae5212f5f2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a02a9ba42837b800337b382ae5212f5f2">operator==</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a02a9ba42837b800337b382ae5212f5f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
+<tr class="separator:a02a9ba42837b800337b382ae5212f5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5d9f40831d1e1b9b82199323d79b7b"><td class="memTemplParams" colspan="2"><a id="a9c5d9f40831d1e1b9b82199323d79b7b"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a9c5d9f40831d1e1b9b82199323d79b7b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a9c5d9f40831d1e1b9b82199323d79b7b">operator!=</a> (const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a9c5d9f40831d1e1b9b82199323d79b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
+<tr class="separator:a9c5d9f40831d1e1b9b82199323d79b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a496057921f87c88de12e5dc2948b8162"><td class="memTemplParams" colspan="2"><a id="a496057921f87c88de12e5dc2948b8162"></a>
 template&lt;class Key , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
 <tr class="memitem:a496057921f87c88de12e5dc2948b8162"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a496057921f87c88de12e5dc2948b8162">swap</a> (<a class="el" href="classweak_1_1weak__unordered__set.html">weak_unordered_set</a>&lt; Key, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__unordered__set.html">weak_unordered_set</a>&lt; Key, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
@@ -159,83 +159,83 @@ template&lt;class Key , class Hash , class KeyEqual , class Allocator &gt; </td>
 <tr class="memitem:a209706b38da2730a491e65e1b66db58b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a209706b38da2730a491e65e1b66db58b">operator!=</a> (const <a class="el" href="classweak_1_1weak__unordered__set.html">weak_unordered_set</a>&lt; Key, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__unordered__set.html">weak_unordered_set</a>&lt; Key, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
 <tr class="memdesc:a209706b38da2730a491e65e1b66db58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disequality for <code><a class="el" href="classweak_1_1weak__unordered__set.html" title="An unordered set of weak pointers. ">weak_unordered_set</a></code>s. <br /></td></tr>
 <tr class="separator:a209706b38da2730a491e65e1b66db58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef500e96ff88ecdeb7ce4e1ac9f30697"><td class="memTemplParams" colspan="2"><a id="aef500e96ff88ecdeb7ce4e1ac9f30697"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:aef500e96ff88ecdeb7ce4e1ac9f30697"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#aef500e96ff88ecdeb7ce4e1ac9f30697">swap</a> (<a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:aef500e96ff88ecdeb7ce4e1ac9f30697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__value__unordered__map.html" title="A map whose range values are stored by std::weak_ptrs. ">weak_value_unordered_map</a></code>s in constant time. <br /></td></tr>
-<tr class="separator:aef500e96ff88ecdeb7ce4e1ac9f30697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a878b12a943041578a2e411b1f641a30d"><td class="memTemplParams" colspan="2">template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </td></tr>
-<tr class="memitem:a878b12a943041578a2e411b1f641a30d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a878b12a943041578a2e411b1f641a30d">submap</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b, ValueEqual compare=std::equal_to&lt; Value &gt;())</td></tr>
-<tr class="memdesc:a878b12a943041578a2e411b1f641a30d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#a878b12a943041578a2e411b1f641a30d">More...</a><br /></td></tr>
-<tr class="separator:a878b12a943041578a2e411b1f641a30d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63106995bc34c3ad8f005d892453e6f1"><td class="memTemplParams" colspan="2"><a id="a63106995bc34c3ad8f005d892453e6f1"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a63106995bc34c3ad8f005d892453e6f1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a63106995bc34c3ad8f005d892453e6f1">keys_subset</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a63106995bc34c3ad8f005d892453e6f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
-<tr class="separator:a63106995bc34c3ad8f005d892453e6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43b22b604999f331d407b8ca19e23a6a"><td class="memTemplParams" colspan="2"><a id="a43b22b604999f331d407b8ca19e23a6a"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a43b22b604999f331d407b8ca19e23a6a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a43b22b604999f331d407b8ca19e23a6a">operator==</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a43b22b604999f331d407b8ca19e23a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
-<tr class="separator:a43b22b604999f331d407b8ca19e23a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34fce245bd3b5780558bd2d1ebb31641"><td class="memTemplParams" colspan="2"><a id="a34fce245bd3b5780558bd2d1ebb31641"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a34fce245bd3b5780558bd2d1ebb31641"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a34fce245bd3b5780558bd2d1ebb31641">operator!=</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a34fce245bd3b5780558bd2d1ebb31641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
-<tr class="separator:a34fce245bd3b5780558bd2d1ebb31641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad384eafdf2cdbe5ed5912829c1a37a3e"><td class="memTemplParams" colspan="2"><a id="ad384eafdf2cdbe5ed5912829c1a37a3e"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:ad384eafdf2cdbe5ed5912829c1a37a3e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#ad384eafdf2cdbe5ed5912829c1a37a3e">swap</a> (<a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:ad384eafdf2cdbe5ed5912829c1a37a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__weak__unordered__map.html" title="A map whose keys and range values are both stored by std::weak_ptrs. ">weak_weak_unordered_map</a></code>s in constant time. <br /></td></tr>
-<tr class="separator:ad384eafdf2cdbe5ed5912829c1a37a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37dcc22a8d8b021b6f48a3faeec9b4f2"><td class="memTemplParams" colspan="2">template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </td></tr>
-<tr class="memitem:a37dcc22a8d8b021b6f48a3faeec9b4f2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a37dcc22a8d8b021b6f48a3faeec9b4f2">submap</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b, ValueEqual compare=std::equal_to&lt; Value &gt;())</td></tr>
-<tr class="memdesc:a37dcc22a8d8b021b6f48a3faeec9b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#a37dcc22a8d8b021b6f48a3faeec9b4f2">More...</a><br /></td></tr>
-<tr class="separator:a37dcc22a8d8b021b6f48a3faeec9b4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a002ade6013f03adeb8fcfdeceb15d712"><td class="memTemplParams" colspan="2"><a id="a002ade6013f03adeb8fcfdeceb15d712"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a002ade6013f03adeb8fcfdeceb15d712"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a002ade6013f03adeb8fcfdeceb15d712">keys_subset</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a002ade6013f03adeb8fcfdeceb15d712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
-<tr class="separator:a002ade6013f03adeb8fcfdeceb15d712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1932a9a99e77f7092262d4b09a46095e"><td class="memTemplParams" colspan="2"><a id="a1932a9a99e77f7092262d4b09a46095e"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a1932a9a99e77f7092262d4b09a46095e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a1932a9a99e77f7092262d4b09a46095e">operator==</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a1932a9a99e77f7092262d4b09a46095e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
-<tr class="separator:a1932a9a99e77f7092262d4b09a46095e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2862319398cf92eb3709520b23b4ccbc"><td class="memTemplParams" colspan="2"><a id="a2862319398cf92eb3709520b23b4ccbc"></a>
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
-<tr class="memitem:a2862319398cf92eb3709520b23b4ccbc"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a2862319398cf92eb3709520b23b4ccbc">operator!=</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
-<tr class="memdesc:a2862319398cf92eb3709520b23b4ccbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
-<tr class="separator:a2862319398cf92eb3709520b23b4ccbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7960692fe9d2a7abb652faf131ab53df"><td class="memTemplParams" colspan="2"><a id="a7960692fe9d2a7abb652faf131ab53df"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a7960692fe9d2a7abb652faf131ab53df"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a7960692fe9d2a7abb652faf131ab53df">swap</a> (<a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a7960692fe9d2a7abb652faf131ab53df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__value__unordered__map.html" title="A map whose range values are stored by std::weak_ptrs. ">weak_value_unordered_map</a></code>s in constant time. <br /></td></tr>
+<tr class="separator:a7960692fe9d2a7abb652faf131ab53df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602a399cfb6cab40772455a313f152ce"><td class="memTemplParams" colspan="2">template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </td></tr>
+<tr class="memitem:a602a399cfb6cab40772455a313f152ce"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a602a399cfb6cab40772455a313f152ce">submap</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b, TEqual compare=TEqual())</td></tr>
+<tr class="memdesc:a602a399cfb6cab40772455a313f152ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#a602a399cfb6cab40772455a313f152ce">More...</a><br /></td></tr>
+<tr class="separator:a602a399cfb6cab40772455a313f152ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcce79b4789f5732bffbf284a0a97a40"><td class="memTemplParams" colspan="2"><a id="abcce79b4789f5732bffbf284a0a97a40"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:abcce79b4789f5732bffbf284a0a97a40"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#abcce79b4789f5732bffbf284a0a97a40">keys_subset</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:abcce79b4789f5732bffbf284a0a97a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
+<tr class="separator:abcce79b4789f5732bffbf284a0a97a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc0ad30eca279c0731f39b305ab2b63"><td class="memTemplParams" colspan="2"><a id="aecc0ad30eca279c0731f39b305ab2b63"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:aecc0ad30eca279c0731f39b305ab2b63"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#aecc0ad30eca279c0731f39b305ab2b63">operator==</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:aecc0ad30eca279c0731f39b305ab2b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
+<tr class="separator:aecc0ad30eca279c0731f39b305ab2b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e094907d0d2e25a329b0b5ba90d429"><td class="memTemplParams" colspan="2"><a id="a49e094907d0d2e25a329b0b5ba90d429"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a49e094907d0d2e25a329b0b5ba90d429"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a49e094907d0d2e25a329b0b5ba90d429">operator!=</a> (const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a49e094907d0d2e25a329b0b5ba90d429"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
+<tr class="separator:a49e094907d0d2e25a329b0b5ba90d429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a416b6620ea6b8b2a9f0e159eb104c1d4"><td class="memTemplParams" colspan="2"><a id="a416b6620ea6b8b2a9f0e159eb104c1d4"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a416b6620ea6b8b2a9f0e159eb104c1d4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a416b6620ea6b8b2a9f0e159eb104c1d4">swap</a> (<a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a416b6620ea6b8b2a9f0e159eb104c1d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two <code><a class="el" href="classweak_1_1weak__weak__unordered__map.html" title="A map whose keys and range values are both stored by std::weak_ptrs. ">weak_weak_unordered_map</a></code>s in constant time. <br /></td></tr>
+<tr class="separator:a416b6620ea6b8b2a9f0e159eb104c1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18bcad05889a1d337ce14f97b215227e"><td class="memTemplParams" colspan="2">template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </td></tr>
+<tr class="memitem:a18bcad05889a1d337ce14f97b215227e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a18bcad05889a1d337ce14f97b215227e">submap</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b, TEqual compare=TEqual())</td></tr>
+<tr class="memdesc:a18bcad05889a1d337ce14f97b215227e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <code>a</code> a submap of <code>b</code>?  <a href="#a18bcad05889a1d337ce14f97b215227e">More...</a><br /></td></tr>
+<tr class="separator:a18bcad05889a1d337ce14f97b215227e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaadd2289e4bf4bd3100907779cfc718"><td class="memTemplParams" colspan="2"><a id="aeaadd2289e4bf4bd3100907779cfc718"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:aeaadd2289e4bf4bd3100907779cfc718"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#aeaadd2289e4bf4bd3100907779cfc718">keys_subset</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:aeaadd2289e4bf4bd3100907779cfc718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the keys of <code>a</code> a subset of the keys of <code>b</code>? <br /></td></tr>
+<tr class="separator:aeaadd2289e4bf4bd3100907779cfc718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84d197c99e29fcf7e7f5152bbad5b659"><td class="memTemplParams" colspan="2"><a id="a84d197c99e29fcf7e7f5152bbad5b659"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a84d197c99e29fcf7e7f5152bbad5b659"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a84d197c99e29fcf7e7f5152bbad5b659">operator==</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a84d197c99e29fcf7e7f5152bbad5b659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps equal? <br /></td></tr>
+<tr class="separator:a84d197c99e29fcf7e7f5152bbad5b659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47b7408aad491aaec3f02350e1c9fc63"><td class="memTemplParams" colspan="2"><a id="a47b7408aad491aaec3f02350e1c9fc63"></a>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator &gt; </td></tr>
+<tr class="memitem:a47b7408aad491aaec3f02350e1c9fc63"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceweak.html#a47b7408aad491aaec3f02350e1c9fc63">operator!=</a> (const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;a, const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;b)</td></tr>
+<tr class="memdesc:a47b7408aad491aaec3f02350e1c9fc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are the given maps unequal? <br /></td></tr>
+<tr class="separator:a47b7408aad491aaec3f02350e1c9fc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Namespace for weak pairs and hash tables. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="acf6656216fe804d883d3c6a73abe1a39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf6656216fe804d883d3c6a73abe1a39">&#9670;&nbsp;</a></span>submap() <span class="overload">[1/3]</span></h2>
+<a id="a3a4b32759c453e1736e32c554e3c5f35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a4b32759c453e1736e32c554e3c5f35">&#9670;&nbsp;</a></span>submap() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </div>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool weak::submap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__key__unordered__map.html">weak_key_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ValueEqual&#160;</td>
-          <td class="paramname"><em>compare</em> = <code>std::equal_to&lt;Value&gt;()</code>&#160;</td>
+          <td class="paramtype">TEqual&#160;</td>
+          <td class="paramname"><em>compare</em> = <code>TEqual()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -252,31 +252,31 @@ template&lt;class Key , class Value , class Hash , class KeyEqual , class Alloca
 
 </div>
 </div>
-<a id="a878b12a943041578a2e411b1f641a30d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a878b12a943041578a2e411b1f641a30d">&#9670;&nbsp;</a></span>submap() <span class="overload">[2/3]</span></h2>
+<a id="a602a399cfb6cab40772455a313f152ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a602a399cfb6cab40772455a313f152ce">&#9670;&nbsp;</a></span>submap() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </div>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool weak::submap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__value__unordered__map.html">weak_value_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ValueEqual&#160;</td>
-          <td class="paramname"><em>compare</em> = <code>std::equal_to&lt;Value&gt;()</code>&#160;</td>
+          <td class="paramtype">TEqual&#160;</td>
+          <td class="paramname"><em>compare</em> = <code>TEqual()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -293,31 +293,31 @@ template&lt;class Key , class Value , class Hash , class KeyEqual , class Alloca
 
 </div>
 </div>
-<a id="a37dcc22a8d8b021b6f48a3faeec9b4f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37dcc22a8d8b021b6f48a3faeec9b4f2">&#9670;&nbsp;</a></span>submap() <span class="overload">[3/3]</span></h2>
+<a id="a18bcad05889a1d337ce14f97b215227e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18bcad05889a1d337ce14f97b215227e">&#9670;&nbsp;</a></span>submap() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class Key , class Value , class Hash , class KeyEqual , class Allocator , class ValueEqual  = std::equal_to&lt;Value&gt;&gt; </div>
+template&lt;class Key , class T , class Hash , class KeyEqual , class Allocator , class TEqual  = std::equal_to&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool weak::submap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, Value, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classweak_1_1weak__weak__unordered__map.html">weak_weak_unordered_map</a>&lt; Key, T, Hash, KeyEqual, Allocator &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ValueEqual&#160;</td>
-          <td class="paramname"><em>compare</em> = <code>std::equal_to&lt;Value&gt;()</code>&#160;</td>
+          <td class="paramtype">TEqual&#160;</td>
+          <td class="paramname"><em>compare</em> = <code>TEqual()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
