@@ -1,6 +1,8 @@
 #include "intern_table.h"
 #include <catch.hpp>
 
+using namespace weak::example::intern_table;
+
 TEST_CASE("uninterned symbol")
 {
     auto a1 = Symbol::uninterned("a");

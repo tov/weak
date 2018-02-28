@@ -1,5 +1,7 @@
 #include "intern_table.h"
 
+namespace weak::example::intern_table {
+
 Symbol intern(std::string_view name)
 {
     static Symbol_table table;
@@ -44,3 +46,4 @@ bool operator!=(const Symbol& a, const Symbol& b)
     return !(a == b);
 }
 
+} // end namespace weak::example::intern_table

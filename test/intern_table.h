@@ -6,6 +6,8 @@
 #include <string>
 #include <string_view>
 
+namespace weak::example::intern_table {
+
 class Symbol;
 
 /// Interns a symbol in the default symbol table.
@@ -70,3 +72,4 @@ public:
 /// Symbol disequality.
 bool operator!=(const Symbol&, const Symbol&);
 
+} // end namespace weak::example::intern_table
