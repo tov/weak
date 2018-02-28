@@ -30,11 +30,11 @@ namespace weak {
 ///   - `weak_weak_unordered_map`, which maps `std::weak_ptr`s to
 ///     `std::weak_ptr`s.
 ///
-/// Most of the interfaces of all four classes are common, and declared as part
-/// of a shared base class `weak_hash_table_base`. All the constructors may
-/// be found in that class as well.
+/// Most of the interfaces of all four classes are common, and documented as
+/// part of a shared base class `weak_hash_table_base`. All the constructors
+/// may be found in that class as well.
 ///
-/// Here is an example:
+/// Here is a tiny example:
 ///
 /// ```cpp
 /// weak_key_unordered_map<string, int> map;
@@ -47,6 +47,12 @@ namespace weak {
 /// hello = nullptr;
 /// CHECK( !map.member("hello") );
 /// ```
+///
+/// For a more realistic example, see
+/// [`intern_table.h`](https://github.com/tov/weak/blob/master/test/intern_table.h)
+/// and
+/// [`intern_table.cpp`](https://github.com/tov/weak/blob/master/test/intern_table.cpp).
+///
 
 /// A weak Robin Hood hash table.
 ///
