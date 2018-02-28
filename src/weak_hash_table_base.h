@@ -12,7 +12,7 @@
 
 namespace weak {
 
-/// \mainpage weak: weak hash tables for C++
+/// \mainpage weak: weak hash tables for C++17
 ///
 /// ## Get It
 ///
