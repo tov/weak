@@ -12,3 +12,5 @@ This library provides four forms of weak hash tables:
     `std::weak_ptr`s.
 
 Documentation is [here](https://tov.github.io/weak/).
+
+This library is header-only, but tests can be built with CMake.
