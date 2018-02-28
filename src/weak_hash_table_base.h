@@ -13,6 +13,16 @@
 namespace weak {
 
 /// A weak Robin Hood hash table.
+///
+/// Provides the common functionality for all the weak hash tables, including
+/// both sets and maps.
+///
+/// This is designed to work with element types that implement the
+/// `weak_traits` interface. This includes `weak_ptr<T>` and the various weak
+/// pair types provided by this library. Using a weak pair results in a weak
+/// map, whereas using `weak_ptr<T>` results in a weak set. Usually this
+/// should be instantiated through one of the derived classes, and this class
+/// should not be used directly.
 template <
         class T,
         class Hash = std::hash<typename weak_traits<T>::key_type>,
@@ -22,17 +32,26 @@ template <
 class weak_hash_table_base
 {
 public:
+    /// The actual value type stored by the hash table.
     using weak_value_type       = T;
+    /// The instance of `weak_traits` for `weak_value_type`.
     using weak_trait            = weak_traits<weak_value_type>;
+    /// The value type as viewed from an `iterator`.
     using view_value_type       = typename weak_trait::view_type;
+    /// The value type as viewed from a `const_iterator`.
     using const_view_value_type = typename weak_trait::const_view_type;
+    /// A fully owned and present value type, as required by insertion.
     using strong_value_type     = typename weak_trait::strong_type;
+    /// The type of keys for this table.
     using key_type              = typename weak_trait::key_type;
     using hasher                = Hash;
     using key_equal             = KeyEqual;
     using allocator_type        = Allocator;
 
+    /// The default number of buckets to allocate in a new hash table.
     static constexpr size_t default_bucket_count = 8;
+
+    /// The default maximum load factor that determines when to grow.
     static constexpr float default_max_load_factor = 0.8;
 
 private:
@@ -45,16 +64,24 @@ private:
             (size_t(1) << number_of_hash_bits_) - 1;
 
 protected:
-    // We store the weak pointers in buckets along with a used bit and the
-    // hash code for each bucket. hash_code_ is only valid if ptr_ is non-null.
+    /// A bucket, which contains the stored `weak_value_type` along with
+    /// some hidden metadata.
     class Bucket
     {
     public:
+        /// Returns a reference to the stored `weak_value_type`.
+        ///
+        /// This should not be presumed initialized or uninitialized without further
+        /// contextual information.
         weak_value_type& value()
         {
             return value_;
         }
 
+        /// Returns a constant reference to the stored `weak_value_type`.
+        ///
+        /// This should not be presumed initialized or uninitialized without further
+        /// contextual information.
         const weak_value_type& value() const
         {
             return value_;
@@ -238,6 +265,7 @@ public:
                                    key_equal(), allocator)
     { }
 
+    /// Destructor.
     ~weak_hash_table_base()
     {
         clear();
@@ -274,18 +302,24 @@ public:
         return buckets_.size();
     }
 
+    /// The current load factor.
+    ///
+    /// This over-approximates the proportion of used buckets.
     float load_factor() const
     {
         if (bucket_count() == 0) return 1;
         return float(size_) / bucket_count();
     }
 
+    /// The maximum load factor, exceeding which will trigger growth.
     float max_load_factor() const
     {
         return max_load_factor_;
     }
 
-    // PRECONDITION: 0 < new_value < 1
+    /// Sets the maximum load factor.
+    //
+    /// *PRECONDITION*: 0 < `new_value` < 1
     void max_load_factor(float new_value)
     {
         assert(0 < new_value && new_value < 1);
@@ -385,6 +419,7 @@ public:
         return lookup_(key) != nullptr;
     }
 
+    /// Counts the number of times the `key` appears (0 or 1).
     template <class KeyLike>
     size_t count(const KeyLike& key) const
     {
@@ -394,6 +429,7 @@ public:
     class iterator;
     class const_iterator;
 
+    /// Returns an iterator to the given key, or `this->end()` if not found.
     template <class KeyLike>
     iterator find(const KeyLike& key)
     {
@@ -404,6 +440,7 @@ public:
         }
     }
 
+    /// Returns an iterator to the given key, or `this->end()` if not found.
     template <class KeyLike>
     const_iterator find(const KeyLike& key) const
     {
@@ -414,31 +451,37 @@ public:
         }
     }
 
+    /// Returns an iterator to the beginning of the hash table.
     iterator begin()
     {
         return {buckets_.begin(), buckets_.end()};
     }
 
+    /// Returns an iterator past the end of the hash table.
     iterator end()
     {
         return {buckets_.end(), buckets_.end()};
     }
 
+    /// Returns a constant iterator to the beginning of the hash table.
     const_iterator begin() const
     {
         return cbegin();
     }
 
+    /// Returns a constant iterator past the end of the hash table.
     const_iterator end() const
     {
         return cend();
     }
 
+    /// Returns a constant iterator to the beginning of the hash table.
     const_iterator cbegin() const
     {
         return {buckets_.begin(), buckets_.end()};
     }
 
+    /// Returns a constant iterator past the end of the hash table.
     const_iterator cend() const
     {
         return {buckets_.end(), buckets_.end()};
@@ -592,6 +635,8 @@ private:
     }
 
 protected:
+    /// Given a bucket, which must be uninitialized emplaces the value in
+    /// it and marks it used.
     template <class... Args>
     void construct_bucket_(Bucket& bucket, Args&&... args)
     {
@@ -704,6 +749,13 @@ private:
     }
 };
 
+/// An iterator over the values of the hash table.
+///
+/// This iterator is invalidated by any operation that changes the hash
+/// table, including a shared pointer expiring.
+///
+/// This iterator may allow modifying the values, but it does not allow
+/// modifying the keys, since that would destroy the hash invariant.
 template <
         class T,
         class Hash,
@@ -713,7 +765,10 @@ template <
 class weak_hash_table_base<T, Hash, KeyEqual, Allocator>::iterator
         : public std::iterator<std::forward_iterator_tag, T>
 {
-public:
+private:
+    friend class weak_hash_table_base;
+    friend class const_iterator;
+
     using base_t = typename vector_t::iterator;
 
     iterator(base_t start, base_t limit)
@@ -722,16 +777,24 @@ public:
         find_next_();
     }
 
+public:
+    /// Provides a pointer view of the iterator.
+    ///
+    /// Note that because the value type of the iterator does not exist until
+    /// derereferenced, this operator allocates to return a pointer to it. Thus,
+    /// `operator*() const` is probably more efficient.
     std::unique_ptr<view_value_type> operator->() const
     {
         return std::make_unique<view_value_type>(operator*());
     }
 
+    /// Returns the value indicated by the iterator.
     view_value_type operator*() const
     {
         return base_->value_.lock();
     }
 
+    /// Advances the iterator.
     iterator& operator++()
     {
         ++base_;
@@ -739,6 +802,7 @@ public:
         return *this;
     }
 
+    /// Advances the iterator.
     iterator operator++(int)
     {
         auto old = *this;
@@ -746,11 +810,13 @@ public:
         return old;
     }
 
+    /// Iterator equality.
     bool operator==(iterator other) const
     {
         return base_ == other.base_;
     }
 
+    /// Iterator disequality.
     bool operator!=(iterator other) const
     {
         return base_ != other.base_;
@@ -768,6 +834,10 @@ private:
     }
 };
 
+/// A constant iterator over the values of the hash table.
+///
+/// This iterator is invalidated by any operation that changes the hash
+/// table, including a shared pointer expiring.
 template <
         class T,
         class Hash,
@@ -777,7 +847,9 @@ template <
 class weak_hash_table_base<T, Hash, KeyEqual, Allocator>::const_iterator
         : public std::iterator<std::forward_iterator_tag, const T>
 {
-public:
+private:
+    friend class weak_hash_table_base;
+
     using base_t = typename vector_t::const_iterator;
 
     const_iterator(base_t start, base_t limit)
@@ -786,20 +858,29 @@ public:
         find_next_();
     }
 
+public:
+    /// Implicit conversion from `iterator` to `const_iterator`.
     const_iterator(iterator other)
             : base_(other.base_), limit_(other.limit_)
     { }
 
+    /// Provides a pointer view of the iterator.
+    ///
+    /// Note that because the value type of the iterator does not exist until
+    /// derereferenced, this operator allocates to return a pointer to it. Thus,
+    /// `operator*() const` is probably more efficient.
     std::unique_ptr<const_view_value_type> operator->() const
     {
         return std::make_unique<const_view_value_type>(operator*());
     }
 
+    /// Returns the value indicated by the iterator.
     const_view_value_type operator*() const
     {
         return base_->value_.lock();
     }
 
+    /// Advances the iterator.
     const_iterator& operator++()
     {
         ++base_;
@@ -807,6 +888,7 @@ public:
         return *this;
     }
 
+    /// Advances the iterator.
     const_iterator operator++(int)
     {
         auto old = *this;
@@ -814,11 +896,13 @@ public:
         return old;
     }
 
+    /// Iterator equality.
     bool operator==(const_iterator other) const
     {
         return base_ == other.base_;
     }
 
+    /// Iterator disequality.
     bool operator!=(const_iterator other) const
     {
         return base_ != other.base_;
@@ -836,6 +920,7 @@ private:
     }
 };
 
+/// Swaps the contents of two weak hash tables in constant time.
 template <class T, class Hash, class KeyEqual, class Allocator>
 void swap(weak_hash_table_base<T, Hash, KeyEqual, Allocator>& a,
           weak_hash_table_base<T, Hash, KeyEqual, Allocator>& b)

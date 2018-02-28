@@ -4,6 +4,9 @@
 
 namespace weak {
 
+/// A pair whose second component is a weak pointer.
+///
+/// The first element is owned directly.
 template <class Key, class Value,
         class ValueWeakPtr = std::weak_ptr<Value>>
 struct weak_value_pair
@@ -16,23 +19,31 @@ struct weak_value_pair
     using view_type = std::pair<const key_type&, value_pointer>;
     using const_view_type = view_type;
 
+    /// The first component.
     key_type first;
+    /// The second component.
     value_weak_pointer second;
 
+    /// Constructs or implicitly converts a weak pair from a strong pair.
     weak_value_pair(const strong_type& strong)
             : first(strong.first), second(strong.second)
     { }
 
+    /// Constructs a weak pair from the given key and value.
     template <class K, class V>
     weak_value_pair(K&& key, V&& value)
             : first(std::forward<K>(key)), second(std::forward<V>(value))
     { }
 
+    /// Is this weak pair expired?
+    ///
+    /// A weak value pair is expired if the second component is expired.
     bool expired() const
     {
         return second.expired();
     }
 
+    /// Locks weak pair, producing a view that holds a strong pointer.
     view_type lock() const
     {
         return {first, second.lock()};
