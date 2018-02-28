@@ -252,7 +252,7 @@ public:
     weak_hash_table_base(const weak_hash_table_base& other,
                          const allocator_type& allocator)
             : weak_hash_table_base(other.min_bucket_count_(),
-                                   other.hash_,
+                                   other.hasher_,
                                    other.equal_,
                                    allocator)
     {

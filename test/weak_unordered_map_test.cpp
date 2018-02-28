@@ -64,3 +64,18 @@ TEST_CASE("weak_unordered_map")
 
     CHECK( map == map );
 }
+
+TEST_CASE("copy")
+{
+    weak_key_unordered_map<string, int> map;
+
+    auto hello = make_shared<string>("hello");
+    map[hello] = 5;
+
+    weak_key_unordered_map<string, int> copy_map(map);
+    // copy_map = map;
+
+    CHECK( copy_map == map );
+    CHECK( map == copy_map );
+    CHECK( copy_map == copy_map );
+}

@@ -14,12 +14,13 @@ struct weak_weak_pair
     using second_type = T2;
     using first_pointer = typename weak_traits<WeakPtr1>::strong_type;
     using second_pointer = typename weak_traits<WeakPtr2>::strong_type;
+    using second_const_pointer = typename weak_traits<WeakPtr2>::const_view_type;
     using first_weak_pointer = WeakPtr1;
     using second_weak_pointer = WeakPtr2;
     using key_type = const first_type;
     using strong_type = std::pair<first_pointer, second_pointer>;
     using view_type = strong_type;
-    using const_view_type = view_type;
+    using const_view_type = std::pair<first_pointer, second_const_pointer>;
 
     /// The first component.
     first_weak_pointer first;
