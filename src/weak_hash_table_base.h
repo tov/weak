@@ -430,14 +430,14 @@ public:
     void insert(const strong_value_type& value)
     {
         size_t hash_code = hash_(*weak_trait::key(value));
-        insert_(hash_code, value);
+        insert_(hash_code, value, true);
     }
 
     /// Inserts an element.
     void insert(strong_value_type&& value)
     {
         size_t hash_code = hash_(*weak_trait::key(value));
-        insert_(hash_code, std::move(value));
+        insert_(hash_code, std::move(value), true);
     }
 
     /// Inserts a range of elements.
@@ -647,7 +647,7 @@ private:
             if (bucket.used_) {
                 view_value_type value = bucket.value_.lock();
                 if (weak_trait::key(value)) {
-                    insert_(bucket.hash_code_, weak_trait::move(value));
+                    insert_(bucket.hash_code_, weak_trait::move(value), false);
                 }
             }
         }
@@ -717,7 +717,9 @@ private:
         }
     }
 
-    void insert_(size_t hash_code, const strong_value_type& value)
+    void insert_(size_t hash_code,
+                 const strong_value_type& value,
+                 bool can_grow)
     {
         insert_helper_(hash_code, *weak_trait::key(value),
                        [&](Bucket& bucket) {
@@ -728,10 +730,13 @@ private:
                        },
                        [&](Bucket& bucket) {
                            bucket.value_ = value;
-                       });
+                       },
+                       can_grow);
     }
 
-    void insert_(size_t hash_code, strong_value_type&& value)
+    void insert_(size_t hash_code,
+                 strong_value_type&& value,
+                 bool can_grow)
     {
         insert_helper_(hash_code, *weak_trait::key(value),
                        [&](Bucket& bucket) {
@@ -742,7 +747,8 @@ private:
                        },
                        [&](Bucket& bucket) {
                            bucket.value_ = std::move(value);
-                       });
+                       },
+                       can_grow);
     }
 
 protected:
@@ -762,9 +768,10 @@ protected:
     /// and `on_found`, which will (re-)initialize the bucket with the given key.
     template <class OnUninit, class OnInit, class OnFound>
     void insert_helper_(const key_type& key,
-                        OnUninit on_uninit, OnInit on_init, OnFound on_found)
+                        OnUninit on_uninit, OnInit on_init, OnFound on_found,
+                        bool can_grow = true)
     {
-        insert_helper_(hash_(key), key, on_uninit, on_init, on_found);
+        insert_helper_(hash_(key), key, on_uninit, on_init, on_found, can_grow);
     }
 
 private:
@@ -775,9 +782,10 @@ private:
     /// PRECONDITION: hash_code == hash_(key)
     template <class OnUninit, class OnInit, class OnFound>
     void insert_helper_(size_t hash_code, const key_type& key,
-                        OnUninit on_uninit, OnInit on_init, OnFound on_found)
+                        OnUninit on_uninit, OnInit on_init, OnFound on_found,
+                        bool can_grow = true)
     {
-        maybe_grow_();
+        if (can_grow) maybe_grow_();
 
         size_t pos = which_bucket_(hash_code);
         size_t dist = 0;
