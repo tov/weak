@@ -27,6 +27,7 @@ add_executable17(weak_hash_table_test
         test/catch_main.cpp
         test/weak_unordered_set_test.cpp
         test/weak_unordered_map_test.cpp
+        test/by_ptr_test.cpp
         src/weak_unordered_set.h
         src/weak_weak_unordered_map.h
         src/weak_key_unordered_map.h

@@ -52,7 +52,7 @@ struct weak_value_pair
     }
 
     /// Gets a pointer to the key from a view pair.
-    static const first_type* key(const view_type& view)
+    static const first_type* key(const_view_type& view)
     {
         if (view.second)
             return &view.first;
@@ -61,7 +61,7 @@ struct weak_value_pair
     }
 
     /// Gets a pointer to the key from a strong pair.
-    static const first_type* key(const strong_type& strong)
+    static const first_type* strong_key(const strong_type& strong)
     {
         return &strong.first;
     }

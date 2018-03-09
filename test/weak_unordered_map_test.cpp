@@ -10,23 +10,23 @@ using namespace std;
 
 TEST_CASE("weak_key_unordered_map")
 {
-    weak_key_unordered_map<string, int> map;
-    CHECK( !map.member("hello") );
-    CHECK( map.find("hello") == map.end() );
+    weak_key_unordered_map<int, int> map;
+    CHECK( !map.member(5) );
+    CHECK( map.find(5) == map.end() );
 
-    auto hello = make_shared<string>("hello");
-    map.insert({hello, 5});
-    CHECK( map.find("hello") != map.end() );
+    auto five = make_shared<int>(5);
+    map.insert({five, 5});
+    CHECK( map.find(5) != map.end() );
 
-    hello = nullptr;
-    CHECK( map.find("hello") == map.end() );
+    five = nullptr;
+    CHECK( map.find(5) == map.end() );
 
-    hello = make_shared<string>("hello");
-    map[hello] = 5;
-    CHECK( map.find("hello") != map.end() );
-    CHECK( map[hello] == 5 );
+    five = make_shared<int>(5);
+    map[five] = 5;
+    CHECK( map.find(5) != map.end() );
+    CHECK( map[five] == 5 );
 
-//    CHECK( map == map );
+    CHECK( map == map );
 }
 
 TEST_CASE("weak_value_unordered_map")

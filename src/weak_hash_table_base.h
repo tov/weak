@@ -429,14 +429,14 @@ public:
     /// Inserts an element.
     void insert(const strong_value_type& value)
     {
-        size_t hash_code = hash_(*weak_trait::key(value));
+        size_t hash_code = hash_(*weak_trait::strong_key(value));
         insert_(hash_code, value, true);
     }
 
     /// Inserts an element.
     void insert(strong_value_type&& value)
     {
-        size_t hash_code = hash_(*weak_trait::key(value));
+        size_t hash_code = hash_(*weak_trait::strong_key(value));
         insert_(hash_code, std::move(value), true);
     }
 
@@ -645,9 +645,10 @@ private:
 
         for (Bucket& bucket : old_buckets) {
             if (bucket.used_) {
-                view_value_type value = bucket.value_.lock();
-                if (weak_trait::key(value)) {
-                    insert_(bucket.hash_code_, weak_trait::move(value), false);
+                view_value_type view = bucket.value_.lock();
+                const_view_value_type const_view = view;
+                if (weak_trait::key(const_view)) {
+                    insert_(bucket.hash_code_, weak_trait::move(view), false);
                 }
             }
         }
@@ -670,8 +671,8 @@ private:
                 return std::nullopt;
 
             if (hash_code == bucket.hash_code_) {
-                auto bucket_value_locked = bucket.value_.lock();
-                if (const auto* bucket_key =
+                const_view_value_type bucket_value_locked = bucket.value_.lock();
+                if (const key_type* bucket_key =
                         weak_trait::key(bucket_value_locked))
                     if (equal_(key, *bucket_key))
                         return {pos};
@@ -721,7 +722,7 @@ private:
                  const strong_value_type& value,
                  bool can_grow)
     {
-        insert_helper_(hash_code, *weak_trait::key(value),
+        insert_helper_(hash_code, *weak_trait::strong_key(value),
                        [&](Bucket& bucket) {
                            construct_bucket_(bucket, value);
                        },
@@ -738,7 +739,7 @@ private:
                  strong_value_type&& value,
                  bool can_grow)
     {
-        insert_helper_(hash_code, *weak_trait::key(value),
+        insert_helper_(hash_code, *weak_trait::strong_key(value),
                        [&](Bucket& bucket) {
                            construct_bucket_(bucket, std::move(value));
                        },
@@ -800,8 +801,8 @@ private:
                 return;
             }
 
-            auto bucket_locked = bucket.value_.lock();
-            auto bucket_key = weak_trait::key(bucket_locked);
+            const_view_value_type const_bucket_locked = bucket.value_.lock();
+            auto bucket_key = weak_trait::key(const_bucket_locked);
             if (!bucket_key) {
                 on_init(bucket);
                 bucket.hash_code_ = hash_code;
@@ -809,6 +810,7 @@ private:
             }
 
             // If not expired, but matches the value to insert, replace.
+            view_value_type bucket_locked = bucket.value_.lock();
             if (hash_code == bucket.hash_code_ && equal_(key, *bucket_key)) {
                 on_found(bucket);
                 return;
