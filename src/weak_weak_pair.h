@@ -56,6 +56,11 @@ struct weak_weak_pair
         return {nullptr, nullptr};
     }
 
+    static const_view_type view(const strong_type& strong)
+    {
+        return {strong.first, strong.second};
+    }
+
     /// Gets a pointer to the key from a view pair.
     static const first_type* key(const_view_type& view)
     {
@@ -63,9 +68,9 @@ struct weak_weak_pair
     }
 
     /// Gets a pointer to the key from a strong pair.
-    static const first_type* strong_key(const strong_type& strong)
+    static const first_type& strong_key(const strong_type& strong)
     {
-        return strong.first.get();
+        return *strong.first;
     }
 
     /// Moves from a view pair, producing a strong pair.

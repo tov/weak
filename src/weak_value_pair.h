@@ -51,6 +51,11 @@ struct weak_value_pair
         return {first, second.lock()};
     }
 
+    static const_view_type view(const strong_type& strong)
+    {
+        return {strong.first, strong.second};
+    }
+
     /// Gets a pointer to the key from a view pair.
     static const first_type* key(const_view_type& view)
     {
@@ -61,9 +66,9 @@ struct weak_value_pair
     }
 
     /// Gets a pointer to the key from a strong pair.
-    static const first_type* strong_key(const strong_type& strong)
+    static const first_type& strong_key(const strong_type& strong)
     {
-        return &strong.first;
+        return strong.first;
     }
 
     /// Moves from a view pair, producing a strong pair.

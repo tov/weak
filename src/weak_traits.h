@@ -36,6 +36,12 @@ struct weak_traits
     /// this is `T`.
     using key_type = typename T::key_type;
 
+    /// Views the strong type back at the const view type.
+    static const_view_type view(const strong_type& strong)
+    {
+        return T::view(strong);
+    }
+
     /// Projects a key pointer from a `view_type`.
     ///
     /// The result might be `nullptr`.
@@ -45,7 +51,7 @@ struct weak_traits
     }
 
     /// Projects a key pointer from a `strong_type`.
-    static const key_type* strong_key(const strong_type& strong) {
+    static const key_type& strong_key(const strong_type& strong) {
         return T::strong_key(strong);
     }
 
@@ -58,7 +64,7 @@ struct weak_traits
     }
 };
 
-/// Specialization for storing `std::weak_ptr<T>`.
+///
 template <class T>
 struct weak_traits<std::weak_ptr<T>>
 {
@@ -67,7 +73,7 @@ struct weak_traits<std::weak_ptr<T>>
     using const_view_type = view_type;
     using key_type = T;
 
-    static const_view_type& view(const strong_type& strong)
+    static const_view_type view(strong_type& strong)
     {
         return strong;
     }
@@ -77,9 +83,9 @@ struct weak_traits<std::weak_ptr<T>>
         return view.get();
     }
 
-    static const key_type* strong_key(const strong_type& strong)
+    static const key_type& strong_key(const strong_type& strong)
     {
-        return strong.get();
+        return *strong;
     }
 
     static strong_type move(view_type& view)
@@ -97,19 +103,19 @@ struct weak_traits<std::weak_ptr<const T>>
     using const_view_type = view_type;
     using key_type = const T;
 
-    static const_view_type& view(const strong_type& strong)
+    static const_view_type view(const strong_type& strong)
     {
         return strong;
-    }
+
 
     static key_type* key(const_view_type& view)
     {
         return view? view.get() : nullptr;
     }
 
-    static key_type* strong_key(const strong_type& strong)
+    static key_type& strong_key(const strong_type& strong)
     {
-        return strong.get();
+        return *strong;
     }
 
     static strong_type move(view_type& view)
@@ -124,6 +130,11 @@ struct by_ptr
     by_ptr(WeakPtr p) : ptr(p) { }
     by_ptr(typename weak_traits<WeakPtr>::strong_type p) : ptr(p) { }
     WeakPtr ptr;
+
+    auto lock() const
+    {
+        return ptr.lock();
+    }
 };
 
 template <class WeakPtr>
@@ -135,7 +146,7 @@ struct weak_traits<by_ptr<WeakPtr>>
     using const_view_type = typename weak_ptr_traits::const_view_type;
     using key_type = const_view_type;
 
-    static const_view_type& view(const strong_type& strong)
+    static const_view_type view(const strong_type& strong)
     {
         return weak_ptr_traits::view(strong);
     }
@@ -144,8 +155,13 @@ struct weak_traits<by_ptr<WeakPtr>>
         return &view;
     }
 
-    static key_type* strong_key(const strong_type& strong) {
-        return &weak_ptr_traits::view(strong);
+    static key_type strong_key(const strong_type& strong) {
+        return weak_ptr_traits::view(strong);
+    }
+
+    static strong_type move(view_type& view)
+    {
+        return weak_ptr_traits::move(view);
     }
 };
 

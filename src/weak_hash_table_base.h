@@ -429,14 +429,14 @@ public:
     /// Inserts an element.
     void insert(const strong_value_type& value)
     {
-        size_t hash_code = hash_(*weak_trait::strong_key(value));
+        size_t hash_code = hash_(weak_trait::strong_key(value));
         insert_(hash_code, value, true);
     }
 
     /// Inserts an element.
     void insert(strong_value_type&& value)
     {
-        size_t hash_code = hash_(*weak_trait::strong_key(value));
+        size_t hash_code = hash_(weak_trait::strong_key(value));
         insert_(hash_code, std::move(value), true);
     }
 
@@ -722,7 +722,7 @@ private:
                  const strong_value_type& value,
                  bool can_grow)
     {
-        insert_helper_(hash_code, *weak_trait::strong_key(value),
+        insert_helper_(hash_code, weak_trait::strong_key(value),
                        [&](Bucket& bucket) {
                            construct_bucket_(bucket, value);
                        },
@@ -739,7 +739,7 @@ private:
                  strong_value_type&& value,
                  bool can_grow)
     {
-        insert_helper_(hash_code, *weak_trait::strong_key(value),
+        insert_helper_(hash_code, weak_trait::strong_key(value),
                        [&](Bucket& bucket) {
                            construct_bucket_(bucket, std::move(value));
                        },
